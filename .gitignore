@@ -1,8 +1,8 @@
-.vs
+.vs/*
 Evolve/bin/*
 Evolve/obj/Debug/*
 Evolve/obj/*
 Build/*
 KernelEvolve/Debug/*
-.vs/Evolve/v16/.suo
+KernelEvolve/Release/*
 .vs/Evolve/v16/.suo
