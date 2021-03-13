@@ -29,8 +29,7 @@ namespace Evolve
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonStartTraining = new System.Windows.Forms.Button();
-            this.buttonAbortTraining = new System.Windows.Forms.Button();
+            this.buttonStartStopTraining = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -79,13 +78,14 @@ namespace Evolve
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel13 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonOpenResults = new System.Windows.Forms.Button();
-            this.buttonSimulate = new System.Windows.Forms.Button();
             this.textBoxResults = new System.Windows.Forms.TextBox();
+            this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonSimulate = new System.Windows.Forms.Button();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.listBoxResults = new System.Windows.Forms.ListBox();
             this.richTextBoxResultSelected = new System.Windows.Forms.RichTextBox();
+            this.buttonNewSettings = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -120,29 +120,17 @@ namespace Evolve
             this.tableLayoutPanel11.SuspendLayout();
             this.SuspendLayout();
             // 
-            // buttonStartTraining
+            // buttonStartStopTraining
             // 
-            this.buttonStartTraining.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.buttonStartTraining.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonStartTraining.Location = new System.Drawing.Point(3, 3);
-            this.buttonStartTraining.Name = "buttonStartTraining";
-            this.buttonStartTraining.Size = new System.Drawing.Size(211, 33);
-            this.buttonStartTraining.TabIndex = 0;
-            this.buttonStartTraining.Text = "Start Training";
-            this.buttonStartTraining.UseVisualStyleBackColor = false;
-            this.buttonStartTraining.Click += new System.EventHandler(this.buttonStartTraining_Click);
-            // 
-            // buttonAbortTraining
-            // 
-            this.buttonAbortTraining.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.buttonAbortTraining.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonAbortTraining.Location = new System.Drawing.Point(220, 3);
-            this.buttonAbortTraining.Name = "buttonAbortTraining";
-            this.buttonAbortTraining.Size = new System.Drawing.Size(212, 33);
-            this.buttonAbortTraining.TabIndex = 1;
-            this.buttonAbortTraining.Text = "Abort Training";
-            this.buttonAbortTraining.UseVisualStyleBackColor = false;
-            this.buttonAbortTraining.Click += new System.EventHandler(this.buttonAbortTraining_Click);
+            this.buttonStartStopTraining.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonStartStopTraining.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonStartStopTraining.Location = new System.Drawing.Point(145, 3);
+            this.buttonStartStopTraining.Name = "buttonStartStopTraining";
+            this.buttonStartStopTraining.Size = new System.Drawing.Size(144, 33);
+            this.buttonStartStopTraining.TabIndex = 0;
+            this.buttonStartStopTraining.Text = "Start Training";
+            this.buttonStartStopTraining.UseVisualStyleBackColor = false;
+            this.buttonStartStopTraining.Click += new System.EventHandler(this.buttonStartTraining_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -690,6 +678,7 @@ namespace Evolve
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 104F));
             this.tableLayoutPanel10.Controls.Add(this.buttonLoadSettings, 0, 0);
             this.tableLayoutPanel10.Controls.Add(this.buttonSaveSettings, 2, 0);
+            this.tableLayoutPanel10.Controls.Add(this.buttonNewSettings, 4, 0);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel10.Location = new System.Drawing.Point(3, 456);
             this.tableLayoutPanel10.Name = "tableLayoutPanel10";
@@ -718,6 +707,7 @@ namespace Evolve
             this.buttonSaveSettings.TabIndex = 1;
             this.buttonSaveSettings.Text = "Save Settings";
             this.buttonSaveSettings.UseVisualStyleBackColor = true;
+            this.buttonSaveSettings.Click += new System.EventHandler(this.buttonSaveSettings_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -736,16 +726,16 @@ namespace Evolve
             // 
             // tableLayoutPanel3
             // 
-            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.buttonStartTraining, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.buttonAbortTraining, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.buttonStartStopTraining, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 447);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(435, 39);
             this.tableLayoutPanel3.TabIndex = 6;
             // 
@@ -845,6 +835,25 @@ namespace Evolve
             this.tableLayoutPanel13.Size = new System.Drawing.Size(877, 29);
             this.tableLayoutPanel13.TabIndex = 0;
             // 
+            // buttonOpenResults
+            // 
+            this.buttonOpenResults.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonOpenResults.Location = new System.Drawing.Point(3, 3);
+            this.buttonOpenResults.Name = "buttonOpenResults";
+            this.buttonOpenResults.Size = new System.Drawing.Size(109, 23);
+            this.buttonOpenResults.TabIndex = 0;
+            this.buttonOpenResults.Text = "Open";
+            this.buttonOpenResults.UseVisualStyleBackColor = true;
+            // 
+            // textBoxResults
+            // 
+            this.textBoxResults.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxResults.Location = new System.Drawing.Point(118, 3);
+            this.textBoxResults.Name = "textBoxResults";
+            this.textBoxResults.ReadOnly = true;
+            this.textBoxResults.Size = new System.Drawing.Size(756, 20);
+            this.textBoxResults.TabIndex = 1;
+            // 
             // tableLayoutPanel14
             // 
             this.tableLayoutPanel14.ColumnCount = 3;
@@ -860,16 +869,6 @@ namespace Evolve
             this.tableLayoutPanel14.Size = new System.Drawing.Size(877, 29);
             this.tableLayoutPanel14.TabIndex = 1;
             // 
-            // buttonOpenResults
-            // 
-            this.buttonOpenResults.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonOpenResults.Location = new System.Drawing.Point(3, 3);
-            this.buttonOpenResults.Name = "buttonOpenResults";
-            this.buttonOpenResults.Size = new System.Drawing.Size(109, 23);
-            this.buttonOpenResults.TabIndex = 0;
-            this.buttonOpenResults.Text = "Open";
-            this.buttonOpenResults.UseVisualStyleBackColor = true;
-            // 
             // buttonSimulate
             // 
             this.buttonSimulate.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -879,15 +878,6 @@ namespace Evolve
             this.buttonSimulate.TabIndex = 0;
             this.buttonSimulate.Text = "Visualize";
             this.buttonSimulate.UseVisualStyleBackColor = true;
-            // 
-            // textBoxResults
-            // 
-            this.textBoxResults.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxResults.Location = new System.Drawing.Point(118, 3);
-            this.textBoxResults.Name = "textBoxResults";
-            this.textBoxResults.ReadOnly = true;
-            this.textBoxResults.Size = new System.Drawing.Size(756, 20);
-            this.textBoxResults.TabIndex = 1;
             // 
             // tableLayoutPanel11
             // 
@@ -923,6 +913,17 @@ namespace Evolve
             this.richTextBoxResultSelected.Size = new System.Drawing.Size(353, 413);
             this.richTextBoxResultSelected.TabIndex = 1;
             this.richTextBoxResultSelected.Text = "";
+            // 
+            // buttonNewSettings
+            // 
+            this.buttonNewSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonNewSettings.Location = new System.Drawing.Point(323, 3);
+            this.buttonNewSettings.Name = "buttonNewSettings";
+            this.buttonNewSettings.Size = new System.Drawing.Size(98, 24);
+            this.buttonNewSettings.TabIndex = 2;
+            this.buttonNewSettings.Text = "New Settings";
+            this.buttonNewSettings.UseVisualStyleBackColor = true;
+            this.buttonNewSettings.Click += new System.EventHandler(this.buttonNewSettings_Click);
             // 
             // Form1
             // 
@@ -976,8 +977,7 @@ namespace Evolve
 
         #endregion
 
-        private System.Windows.Forms.Button buttonStartTraining;
-        private System.Windows.Forms.Button buttonAbortTraining;
+        private System.Windows.Forms.Button buttonStartStopTraining;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.RichTextBox textBoxInfo;
@@ -1033,6 +1033,7 @@ namespace Evolve
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
         private System.Windows.Forms.ListBox listBoxResults;
         private System.Windows.Forms.RichTextBox richTextBoxResultSelected;
+        private System.Windows.Forms.Button buttonNewSettings;
     }
 }
 

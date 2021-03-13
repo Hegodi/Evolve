@@ -40,6 +40,7 @@ private:
 	ProgressCallback m_progressCallback = nullptr;
 	// Flow controll
 	int m_epochs = 0;
+	std::string m_baseFileName = "";
 
 	STrainingSettings m_settings;
 

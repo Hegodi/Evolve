@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.IO;
 
 namespace Evolve
 {
@@ -31,9 +32,8 @@ namespace Evolve
         enum EMessageCodes
         {
             EMessageCode_Info,
-            EMessageCode_Aborted,
-            EMessageCode_Completed,
-            EMessageCode_Saved,
+            EMessageCode_InfoHigh,
+            EMessageCode_Warning,
             EMessageCode_Error
         }
 
@@ -53,7 +53,6 @@ namespace Evolve
         private delegate void DelegateProcessMessage(int msgCode, string text);
 
         Thread m_workerThread;
-        VisualSimulation m_visualSimulation = null;
 
         public Form1()
         {
@@ -64,27 +63,51 @@ namespace Evolve
         {
             if (m_workerThread != null && m_workerThread.IsAlive)
             {
-                UpdateInfoLog(0, "Thread still alive");
+                AbortTraining();
+                buttonStartStopTraining.Text = "Start Training";
             }
-            TrainingSettings settings = new TrainingSettings();
+            else
+            {
 
-            settings.m_populationSize = (int) numericUpDownPopulationSize.Value;
-            settings.m_directPromotion = (int) numericUpDownDirectPromotions.Value;
-            settings.m_mutationRate = (float) numericUpDownMutationRate.Value;
-            settings.m_roundsParentSelection = (int) numericUpDownParentSel.Value;
-            settings.m_maxEpochs = (int)numericUpDownMaxEpochs.Value;
-            settings.m_periodSave = (int)numericUpDownSaveFreq.Value;
-            settings.m_periodOutput = (int) numericUpDownOutputFreq.Value;
-            settings.m_numberThreads = (int) numericUpDownNumThreads.Value;
-            settings.m_resultName = textBoxResultsName.Text;
+                string filename = textBoxResultsName.Text;
 
-            m_workerThread = new Thread(() => WorkerThreadEntryPoint(settings, OnProgressCallback));
-            m_workerThread.Start();
-        }
+                bool createDirectory = true;
+                if (Directory.Exists(filename))
+                {
+                    DialogResult result = MessageBox.Show("A folder named '" + filename + "' already exist. Do you want to overwrite it?", "ERROR", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (result == DialogResult.Yes)
+                    {
+                        createDirectory = false;
+                        UpdateInfoLog((int)EMessageCodes.EMessageCode_Warning, "Results in '" + filename + "' will be overriden");
+                    }
+                    else
+                    {
+                        UpdateInfoLog((int)EMessageCodes.EMessageCode_Error, "Folder named '" + filename + "' already exist");
+                        return;
+                    }
+                }
 
-        private void buttonAbortTraining_Click(object sender, EventArgs e)
-        {
-            AbortTraining();
+                if (createDirectory)
+                {
+                    Directory.CreateDirectory(filename);
+                    UpdateInfoLog((int)EMessageCodes.EMessageCode_InfoHigh, "Created directory '" + filename + "'");
+                }
+
+                TrainingSettings settings = new TrainingSettings();
+                settings.m_populationSize = (int)numericUpDownPopulationSize.Value;
+                settings.m_directPromotion = (int)numericUpDownDirectPromotions.Value;
+                settings.m_mutationRate = (float)numericUpDownMutationRate.Value;
+                settings.m_roundsParentSelection = (int)numericUpDownParentSel.Value;
+                settings.m_maxEpochs = (int)numericUpDownMaxEpochs.Value;
+                settings.m_periodSave = (int)numericUpDownSaveFreq.Value;
+                settings.m_periodOutput = (int)numericUpDownOutputFreq.Value;
+                settings.m_numberThreads = (int)numericUpDownNumThreads.Value;
+                settings.m_resultName = filename;
+
+                buttonStartStopTraining.Text = "Abort Training";
+                m_workerThread = new Thread(() => WorkerThreadEntryPoint(settings, OnProgressCallback));
+                m_workerThread.Start();
+            }
         }
 
         private void OnProgressCallback(int msgCode, string message)
@@ -106,14 +129,11 @@ namespace Evolve
                 case EMessageCodes.EMessageCode_Info:
                     color = Color.Black;
                     break;
-                case EMessageCodes.EMessageCode_Aborted:
-                    color = Color.Red;
-                    break;
-                case EMessageCodes.EMessageCode_Completed:
-                    color = Color.Green;
-                    break;
-                case EMessageCodes.EMessageCode_Saved:
+                case EMessageCodes.EMessageCode_InfoHigh:
                     color = Color.Blue;
+                    break;
+                case EMessageCodes.EMessageCode_Warning:
+                    color = Color.Orange;
                     break;
                 case EMessageCodes.EMessageCode_Error:
                     color = Color.Red;
@@ -136,17 +156,11 @@ namespace Evolve
         {
         }
 
-        private void buttonVisualize_Click(object sender, EventArgs e)
+        private void buttonNewSettings_Click(object sender, EventArgs e)
         {
-            if (m_visualSimulation == null)
-            {
-                m_visualSimulation = new VisualSimulation();
-            }
-            if (m_visualSimulation.IsDisposed)
-            {
-                m_visualSimulation = new VisualSimulation();
-            }
-            m_visualSimulation.Show();
+        }
+        private void buttonSaveSettings_Click(object sender, EventArgs e)
+        {
         }
     }
 }

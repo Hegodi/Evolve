@@ -23,9 +23,8 @@ public:
 enum EMessageCode
 {
 	EMessageCode_Info,
-	EMessageCode_Aborted,
-	EMessageCode_Completed,
-	EMessageCode_Saved,
+	EMessageCode_InfoHigh,
+	EMessageCode_Warning,
 	EMessageCode_Error
 };
 

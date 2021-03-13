@@ -16,6 +16,8 @@ void CTraining::Run(STrainingSettings const& settings, ProgressCallback progress
 	m_settings = settings;
 	m_epochs = 0;
 
+	m_baseFileName = m_settings.m_resultsName + std::string("\\Epoch_");
+
 	std::cout << "NAME: " << m_settings.m_resultsName << "\n\n";
 
 	m_progressCallback(EMessageCode_Info, "Training Started");
@@ -113,11 +115,11 @@ void CTraining::Run(STrainingSettings const& settings, ProgressCallback progress
 
 	if (m_abortTraining)
 	{
-		SendMessage(EMessageCode_Aborted, "Training aborted");
+		SendMessage(EMessageCode_Error, "Training aborted");
 	}
 	else
 	{
-		SendMessage(EMessageCode_Completed, "Training completed");
+		SendMessage(EMessageCode_InfoHigh, "Training completed");
 	}
 	m_isRunning = false;
 	std::cout << "Simulation Finished\n";
@@ -126,7 +128,7 @@ void CTraining::Run(STrainingSettings const& settings, ProgressCallback progress
 void CTraining::SaveResults(GeneticAlgorithm::CEvolutionaryAlgorithm& evolutionaryAlgorithm)
 {
 	evolutionaryAlgorithm.SortPopulation();
-	std::string filename = m_settings.m_resultsName + std::to_string(m_epochs) + ".bin";
+	std::string filename = m_baseFileName + std::to_string(m_epochs) + ".gar";
 	GeneticAlgorithm::Save(evolutionaryAlgorithm.GetDna(0), filename);
 	SendMessageSaved(filename);
 }
@@ -150,7 +152,7 @@ void CTraining::SendMessageSaved(std::string filename)
 	}
 
 	sprintf_s(m_message, "Results saved (%s)", filename.c_str());
-	m_progressCallback(EMessageCode_Saved, m_message);
+	m_progressCallback(EMessageCode_InfoHigh, m_message);
 }
 
 void CTraining::SendMessage(int msgCode, std::string message)
