@@ -3,5 +3,7 @@
 #include "World/World.h"
 #include "World/Robot.h"
 
-float EvaluateCreature(CRobot const& robot, float simulationTime = 100.0f);
+struct STrainingSettings;
+
+float EvaluateCreature(CRobot const& robot, STrainingSettings const& settings, float simulationTime = 100.0f);
 

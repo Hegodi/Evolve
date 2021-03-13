@@ -36,10 +36,14 @@ void CRobot::Init(Dna const& dna)
 
 void CRobot::CreateNodesAndSprings(Dna const& dna)
 {
+	std::cout << "================== ROBOT ====================\n";
 	for (int i = 0; i < DNA_LENGTH; i++)
 	{
 		m_dna[i] = dna[i];
+		std::cout << (int)m_dna[i] << " ";
 	}
+	std::cout << std::endl;
+	std::cout << "=============================================\n";
 
 	CNode* nodesTmp = new CNode[MAX_NODES];
 	int nodesNewIndices[MAX_NODES];
@@ -201,6 +205,22 @@ Vec2f CRobot::GetPos() const
 
 	pos /= m_nodes.size();
 	return pos;
+}
+
+float CRobot::ComputeReactivity() const
+{
+	float reactivity = 0.0f;
+	for (CSpring const* const spring : m_springs)
+	{
+		if (CSpringActive const* const springActive = dynamic_cast<CSpringActive const* const>(spring))
+		{
+			float length = springActive->GetLength();
+			float deltaFactor = springActive->GetDeltaLengthFactor();
+			reactivity += length * length * deltaFactor * deltaFactor;
+		}
+	}
+
+	return reactivity;
 }
 
 void CRobot::PrintDebug(std::string txt) const

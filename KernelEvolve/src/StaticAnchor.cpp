@@ -63,6 +63,13 @@ int RunGraphicsSimulation(SGraphicsSimulationSettings settings)
 	GeneticAlgorithm::Dna dna;
 	GeneticAlgorithm::Load(dna, settings.m_dnaFilename);
 	CRobot robot(dna);
+
+	//SRobotInfo* info = CreateRobotInfo(settings.m_dnaFilename);
+	//std::cout << "DLL: Robot Info " << settings.m_dnaFilename << std::endl;
+	//std::cout << "DLL: num nodes: " << info->m_numNodes << std::endl;
+	//std::cout << "DLL: num springs: " << info->m_numSprings << std::endl;
+	//DisposeRobotInfo(info);
+
 	world->AddRobot(robot);
 	// Load Robots
 	CGraphicsSimulation game(world);
@@ -73,20 +80,20 @@ int RunGraphicsSimulation(SGraphicsSimulationSettings settings)
 	return 0;
 }
 
-void SNodeInfo::Init(CNode const* const node)
+void InitNodeInfo(CNode const* const node, SNodeInfo& nodeInfo)
 {
 	Vec2f pos = node->GetPos();
-	m_posX = pos.x;
-	m_posY = pos.y;
-	m_radius = node->GetRadius();
-	m_elasticCoefficient = node->GetElasticCoefficient();
-	m_frictionCoefficient = node->GetFrictionCoefficient();
+	nodeInfo.m_posX = pos.x;
+	nodeInfo.m_posY = pos.y;
+	nodeInfo.m_radius = node->GetRadius();
+	nodeInfo.m_elasticCoefficient = node->GetElasticCoefficient();
+	nodeInfo.m_frictionCoefficient = node->GetFrictionCoefficient();
 }
 
-void SSpringInfo::Init(CSpring const* const spring, std::vector<CNode*> const& nodes)
+void InitSpringInfo(CSpring const* const spring, std::vector<CNode*> const& nodes, SSpringInfo& springInfo)
 {
-	m_length = spring->GetLength();
-	m_springConstant = spring->GetSpringConstant();
+	springInfo.m_length = spring->GetLength();
+	springInfo.m_springConstant = spring->GetSpringConstant();
 
 	CNode* nS = spring->GetNodeStart();
 	CNode* nE = spring->GetNodeEnd();
@@ -94,18 +101,18 @@ void SSpringInfo::Init(CSpring const* const spring, std::vector<CNode*> const& n
 	{
 		if (nodes[i] == nS)
 		{
-			m_indNodeStart = i;
+			springInfo.m_indNodeStart = i;
 		}
 		if (nodes[i] == nE)
 		{
-			m_indNodeEnd = i;
+			springInfo.m_indNodeEnd = i;
 		}
 	}
 
 	if (CSpringActive const* const springActive = dynamic_cast<CSpringActive const* const>(spring))
 	{
-		m_deltaLength = springActive->GetDeltaLengthFactor();
-		m_period = springActive->GetPeriod();
+		springInfo.m_deltaLength = springActive->GetDeltaLengthFactor();
+		springInfo.m_period = springActive->GetPeriod();
 	}
 }
 
@@ -128,13 +135,13 @@ SRobotInfo* CreateRobotInfo(const char* dnaFilename)
 	for (int i = 0; i < nodes.size(); i++)
 	{
 		CNode const* node = nodes[i];
-		robotInfo->m_nodes[i].Init(node);
+		InitNodeInfo(node, robotInfo->m_nodes[i]);
 	}
 
 	robotInfo->m_springs = new SSpringInfo[robotInfo->m_numSprings];
 	for (int i = 0; i < springs.size(); i++)
 	{
-		robotInfo->m_springs[i].Init(springs[i], nodes);
+		InitSpringInfo(springs[i], nodes, robotInfo->m_springs[i]);
 	}
 
 	return robotInfo;

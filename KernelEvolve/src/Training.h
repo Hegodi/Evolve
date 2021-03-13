@@ -16,6 +16,16 @@ struct STrainingSettings
 	int m_numberThreads = 1;
 	int m_randomSeed = 0;
 	const char* m_resultsName = nullptr;
+
+	float m_weightDistanceTraveled;
+    float m_weightCollisionsWithGround;
+    float m_weightCollisionsWithObstacles;
+    float m_weightMaxHeight;
+    float m_weightAverageHeight;
+    float m_weightLoadDistanceTraveled;
+    float m_weightLoadCollisionsWithGround;
+    float m_weightNumberNodes;
+    float m_weightReactivity;
 };
 
 class CTraining
@@ -53,4 +63,4 @@ private:
 };
 
 
-extern void ThreadTrain(CTraining* training, GeneticAlgorithm::CEvolutionaryAlgorithm* evolutionaryAlgorithm, int indStart, int indEnd);
+extern void ThreadTrain(CTraining* training, GeneticAlgorithm::CEvolutionaryAlgorithm* evolutionaryAlgorithm, STrainingSettings const& settings, int indStart, int indEnd);

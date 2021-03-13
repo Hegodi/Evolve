@@ -51,6 +51,11 @@ namespace Evolve
                     {
                         createDirectory = false;
                         UpdateInfoLog((int)EvolveKernelAPI.EMessageCodes.EMessageCode_Warning, "Results in '" + filename + "' will be overriden");
+                        string[] files = Directory.GetFiles(filename);
+                        for (int i = 0; i < files.Length; i++)
+                        {
+                            File.Delete(files[i]);
+                        }
                     }
                     else
                     {
@@ -64,6 +69,9 @@ namespace Evolve
                     Directory.CreateDirectory(filename);
                     UpdateInfoLog((int)EvolveKernelAPI.EMessageCodes.EMessageCode_InfoHigh, "Created directory '" + filename + "'");
                 }
+                else
+                {
+                }
 
                 EvolveKernelAPI.TrainingSettings settings = new EvolveKernelAPI.TrainingSettings();
                 settings.m_populationSize = (int)numericUpDownPopulationSize.Value;
@@ -76,6 +84,16 @@ namespace Evolve
                 settings.m_numberThreads = (int)numericUpDownNumThreads.Value;
                 settings.m_randomSeed = (int) numericUpDownRandomSeed.Value;
                 settings.m_resultName = filename;
+
+                settings.m_weightDistanceTraveled = (float) weightDistanceTraveled.Value;
+                settings.m_weightCollisionsWithGround = (float) weightCollisionsGround.Value;
+                settings.m_weightCollisionsWithObstacles = (float)weightCollisionsObstacles.Value;
+                settings.m_weightMaxHeight = (float) weightMaxHeight.Value;
+                settings.m_weightAverageHeight = (float) weightAverageHeight.Value;
+                settings.m_weightLoadDistanceTraveled = (float) weightLoadDistanceTraveled.Value;
+                settings.m_weightLoadCollisionsWithGround = (float) weightLoadCollisionsGround.Value;
+                settings.m_weightNumberNodes = (float)weightNumberNodes.Value;
+                settings.m_weightReactivity = (float)weightReactivity.Value;
 
                 buttonStartStopTraining.Text = "Abort Training";
                 m_workerThread = new Thread(() => WorkerThreadEntryPoint(settings, OnProgressCallback));
@@ -156,6 +174,8 @@ namespace Evolve
         /// 
         private void buttonOpenResults_Click(object sender, EventArgs e)
         {
+            listBoxResults.Items.Clear();
+            listBoxResults.SelectedIndex = -1;
             if (folderBrowserDialogResults.ShowDialog() != DialogResult.OK)
             {
                 return;
@@ -209,7 +229,8 @@ namespace Evolve
 
             EvolveKernelAPI.RobotInfo robotInfo = (EvolveKernelAPI.RobotInfo)Marshal.PtrToStructure(dataRobot, typeof(EvolveKernelAPI.RobotInfo));
 
-            Console.WriteLine("Num Nodes: " + robotInfo.m_numNodes);
+            richTextBoxResultSelected.AppendText(listBoxResults.SelectedItem.ToString());
+            richTextBoxResultSelected.AppendText(Environment.NewLine);
             richTextBoxResultSelected.AppendText("Number Nodes: " + robotInfo.m_numNodes);
             richTextBoxResultSelected.AppendText(Environment.NewLine);
             richTextBoxResultSelected.AppendText("Number Srpings: " + robotInfo.m_numSprings);

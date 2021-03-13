@@ -17,6 +17,18 @@ void CTraining::Run(STrainingSettings const& settings, ProgressCallback progress
 	m_settings = settings;
 	m_epochs = 0;
 
+	std::cout << "=================================================\n";
+	std::cout << m_settings.m_weightAverageHeight << std::endl;
+	std::cout << m_settings.m_weightCollisionsWithGround << std::endl;
+	std::cout << m_settings.m_weightCollisionsWithObstacles << std::endl;
+	std::cout << m_settings.m_weightDistanceTraveled << std::endl;
+	std::cout << m_settings.m_weightLoadCollisionsWithGround << std::endl;
+	std::cout << m_settings.m_weightLoadDistanceTraveled << std::endl;
+	std::cout << m_settings.m_weightMaxHeight << std::endl;
+	std::cout << m_settings.m_weightNumberNodes << std::endl;
+	std::cout << m_settings.m_weightReactivity << std::endl;
+	std::cout << "=================================================\n";
+
 	srand(m_settings.m_randomSeed);
 
 	m_baseFileName = m_settings.m_resultsName + std::string("\\Epoch_");
@@ -66,7 +78,7 @@ void CTraining::Run(STrainingSettings const& settings, ProgressCallback progress
 			robot.Init(dna);
 		}
 
-		float score = EvaluateCreature(robot);
+		float score = EvaluateCreature(robot, m_settings);
 		evolutionaryAlgorithm.SetDna(i, dna);
 		evolutionaryAlgorithm.SetScore(i, score);
 
@@ -89,7 +101,7 @@ void CTraining::Run(STrainingSettings const& settings, ProgressCallback progress
 		{
 			int indStart = i * testsPerThread;
 			int indEnd = indStart + testsPerThread;
-			threads.push_back(std::thread(ThreadTrain, this, &evolutionaryAlgorithm, indStart, indEnd));
+			threads.push_back(std::thread(ThreadTrain, this, &evolutionaryAlgorithm, m_settings, indStart, indEnd));
 		}
 
 		for (int i = 0; i < m_settings.m_numberThreads; i++)
@@ -175,12 +187,12 @@ void CTraining::SendMessage(int msgCode, std::string message)
 	m_progressCallback(msgCode, m_message);
 }
 
-void ThreadTrain(CTraining* training, CEvolutionaryAlgorithm* evolutionaryAlgorithm, int indStart, int indEnd)
+void ThreadTrain(CTraining* training, CEvolutionaryAlgorithm* evolutionaryAlgorithm, STrainingSettings const& settings, int indStart, int indEnd)
 {
 	for (int i = indStart; i < indEnd; i++)
 	{
 		CRobot robot(evolutionaryAlgorithm->GetDna(i));
-		float score = EvaluateCreature(robot);
+		float score = EvaluateCreature(robot, settings);
 		evolutionaryAlgorithm->SetScore(i, score);
 
 		if (training->ShouldAbort())

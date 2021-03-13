@@ -31,6 +31,8 @@ public:
 	float GetXmax() const;
 	float GetTime() const { return m_time; }
 	float GetDeltaTime() const { return m_deltaTime; }
+	int GetNumberCollisionsWithGround() const { return m_collisionsWithGround; }
+	int GetNumberCollisionsWithObstacles() const { return m_collisionsWithObstacles; }
 
 	int GetNumberNodes() const { return m_nodes.size(); }
 	int GetNumberSrings() const { return m_springs.size(); }
@@ -38,7 +40,7 @@ public:
 	CSpring const* const GetSpring(int index) const{ return m_springs[index]; }
 
 private:
-	void CollisionsWithGround();
+	void CollisionsWithGround(bool record);
 
 private:
 	const float m_deltaTime = 0.005f;
@@ -47,6 +49,9 @@ private:
 	float m_size = 150.0f;
 	std::vector<CNode*> m_nodes;
 	std::vector<CSpring*> m_springs;
+
+	int m_collisionsWithGround = 0;
+	int m_collisionsWithObstacles = 0;
 
 };
 

@@ -14,7 +14,7 @@ public:
 	void ResetForce();
 	void AddForce(Vec2f force);
 	void Update(float deltaTime);
-	void CollisionsWithGround(float xmin);
+	int  CollisionsWithGround(float xmin);
 	void AddOffset(Vec2f const& offset);
 	void SetPos(Vec2f const& pos) { m_pos = pos; }
 

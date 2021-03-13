@@ -52,7 +52,7 @@ void CWorld::Update()
 	int attempts = 0;
 	while (anyCollision && attempts < 5)
 	{
-		CollisionsWithGround();
+		CollisionsWithGround(attempts == 0);
 		for (int i = 0; i < m_nodes.size(); i++)
 		{
 			anyCollision = false;
@@ -71,11 +71,15 @@ void CWorld::Update()
 	}
 }
 
-void CWorld::CollisionsWithGround()
+void CWorld::CollisionsWithGround(bool record)
 {
 	for (CNode* node : m_nodes)
 	{
-		node->CollisionsWithGround(0.0f);
+		int col = node->CollisionsWithGround(0.0f);
+		if (record)
+		{
+			m_collisionsWithGround += col;
+		}
 	}
 }
 
@@ -106,6 +110,9 @@ void CWorld::Clean()
 {
 	m_nodes.clear();
 	m_springs.clear();
+	m_collisionsWithGround = 0;
+	m_collisionsWithObstacles = 0;
+	m_time = 0.0f;
 }
 
 Vec2f CWorld::GetCenter() const

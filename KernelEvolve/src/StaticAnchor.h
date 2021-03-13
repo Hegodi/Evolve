@@ -28,7 +28,6 @@ enum EMessageCode
 
 struct SNodeInfo
 {
-	void Init(CNode const* const node);
     float m_posX = 0.0f;
     float m_posY = 0.0f;
     float m_radius = 0.0f;
@@ -36,9 +35,12 @@ struct SNodeInfo
     float m_frictionCoefficient = 0.0f;
 };
 
+void InitNodeInfo(CNode const* const node, SNodeInfo& nodeInfo);
+
+
+
 struct SSpringInfo
 {
-	void Init(CSpring const* const spring, std::vector<CNode*> const& nodes);
     int m_indNodeStart = -1;
     int m_indNodeEnd = -1;
     float m_length = 0.0f;
@@ -46,6 +48,7 @@ struct SSpringInfo
     float m_deltaLength = 0.0f;
     float m_period = 0.0f;
 };
+void InitSpringInfo(CSpring const* const spring, std::vector<CNode*> const& nodes, SSpringInfo& springInfo);
 
 struct SRobotInfo
 {

@@ -26,6 +26,17 @@ namespace Evolve
 	        public int m_numberThreads;
             public int m_randomSeed;
             public string m_resultName;
+
+            // Evaluation
+            public float m_weightDistanceTraveled;
+            public float m_weightCollisionsWithGround;
+            public float m_weightCollisionsWithObstacles;
+            public float m_weightMaxHeight;
+            public float m_weightAverageHeight;
+            public float m_weightLoadDistanceTraveled;
+            public float m_weightLoadCollisionsWithGround;
+            public float m_weightNumberNodes;
+            public float m_weightReactivity;
         }
 
         [StructLayout(LayoutKind.Sequential)]

@@ -56,11 +56,11 @@ void CNode::Update(float deltaTime)
 	m_pos += m_vel * deltaTime;
 }
 
-void CNode::CollisionsWithGround(float ymin)
+int CNode::CollisionsWithGround(float ymin)
 {
 	if (m_isStatic)
 	{
-		return;
+		return 0;
 	}
 
 	if (m_pos.y - m_radius < ymin)
@@ -68,7 +68,10 @@ void CNode::CollisionsWithGround(float ymin)
 		m_pos.y = ymin + m_radius;
 		m_vel.y *= -m_elasticCoefficient;
 		m_vel.x *= m_frictionCoefficient;
+		return 1;
 	}
+
+	return 0;
 }
 
 bool CNode::IsColliding(CNode const* const node) const
@@ -152,38 +155,3 @@ bool CNode::ResolveCollisionPosition(CNode* n1, CNode* n2)
 	}
 	return false;
 }
-/*
-bool CNode::ResolveCollisionPosition(CNode* n1, CNode* n2)
-{
-	if (n1 == nullptr || n2 == nullptr)
-	{
-		return false;
-	}
-
-	Vec2f tangent = n1->m_pos - n2->m_pos;
-	float distance = tangent.length();
-	tangent /= distance;
-	float minDistance = n1->m_radius + n2->m_radius;
-	if (distance < minDistance)
-	{
-
-		float deltaPosHalf = (distance - minDistance) * 0.5f;
-		if (n1->m_isStatic)
-		{
-			n2->m_pos += tangent * deltaPosHalf * 2.1f;
-		}
-		else if (n2->m_isStatic)
-		{
-			n1->m_pos -= tangent * deltaPosHalf * 2.1f;
-		}
-		else
-		{
-			n1->m_pos += tangent * deltaPosHalf;
-			n2->m_pos -= tangent * deltaPosHalf;
-
-		}
-		return true;
-	}
-	return false;
-}
-*/

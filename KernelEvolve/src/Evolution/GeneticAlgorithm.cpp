@@ -44,7 +44,7 @@ namespace GeneticAlgorithm
 	{
 		FILE* fd;
 		bool result = true;
-		fopen_s(&fd, filename.c_str(), "r");
+		fopen_s(&fd, filename.c_str(), "rb");
 		if (fd != nullptr)
 		{
 			int dnaLength;
@@ -59,6 +59,14 @@ namespace GeneticAlgorithm
 				fread(dna, sizeof(Gen), DNA_LENGTH, fd);
 				result = true;
 			}
+
+			std::cout << "================== READ DNA ====================\n";
+			for (int i = 0; i < DNA_LENGTH; i++)
+			{
+				std::cout << (int)dna[i] << " ";
+			}
+			std::cout << std::endl;
+			std::cout << "=============================================\n";
 			fclose(fd);
 		}
 		else

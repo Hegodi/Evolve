@@ -1,10 +1,13 @@
 #include "ScoreFunctions.h"
+#include "Training.h"
 
-float EvaluateCreature(CRobot const& robot, float simulationTime)
+#define MIN_VALUE -9999999.99
+
+float EvaluateCreature(CRobot const& robot, STrainingSettings const& settings, float simulationTime)
 {
 	if (!robot.IsValid())
 	{
-		return -99999.0f;
+		return MIN_VALUE;
 	}
 
 	CWorld world;
@@ -12,7 +15,9 @@ float EvaluateCreature(CRobot const& robot, float simulationTime)
 
 	Vec2f pos0 = robot.GetPos();
 
-	float maxY = 1.0f;
+	float maxY = MIN_VALUE;
+	float avgY = 0.0f;
+
 	float dt = world.GetDeltaTime();
 
 	int count = 0;
@@ -22,20 +27,31 @@ float EvaluateCreature(CRobot const& robot, float simulationTime)
 		time += dt;
 		world.Update();
 
-		//float yPos = world.GetCenter().y;
-		//if (yPos > maxY)
-		//{
-			//maxY = yPos;
-		//}
+		float yPos = world.GetCenter().y;
+		if (yPos > maxY)
+		{
+			maxY = yPos;
+		}
+		avgY += yPos;
 		count++;
 	}
 
+	if (count > 0)
+	{
+		avgY /= count;
+	}
 	Vec2f pos1 = robot.GetPos();
-	//if (maxY > 10.0f)
-	//{
-		//return 0.0f;
-	//}
-	float score = (pos1.x - pos0.x);
+
+	float score = 0;
+	score += (pos1.x - pos0.x) * settings.m_weightDistanceTraveled;
+	score += world.GetNumberCollisionsWithGround() * settings.m_weightCollisionsWithGround;
+	score += world.GetNumberCollisionsWithObstacles() * settings.m_weightCollisionsWithObstacles;
+	score += maxY * settings.m_weightMaxHeight;
+	score += avgY * settings.m_weightAverageHeight;
+	// Load Distance traveled
+	// Load collisions with ground
+	score += robot.GetNumberNodes() * settings.m_weightNumberNodes;
+	score += robot.ComputeReactivity() * settings.m_weightReactivity;
 
 	return score;
 }
