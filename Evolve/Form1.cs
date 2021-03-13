@@ -202,7 +202,7 @@ namespace Evolve
             weightLoadDistanceTraveled.Value = decimal.Parse(reader.ReadLine());
             weightMaxHeight.Value = decimal.Parse(reader.ReadLine());
             weightNumberNodes.Value = decimal.Parse(reader.ReadLine());
-            numberNodesGoal.Value = decimal.Parse(reader.ReadLine());
+            numberNodesGoal.Value = int.Parse(reader.ReadLine());
             weightReactivity.Value = decimal.Parse(reader.ReadLine());
             textBoxResultsName.Text = reader.ReadLine();
 
@@ -251,7 +251,7 @@ namespace Evolve
             writer.WriteLine(weightLoadDistanceTraveled.Value);
             writer.WriteLine(weightMaxHeight.Value);
             writer.WriteLine(weightNumberNodes.Value);
-            writer.WriteLine(numberNodesGoal.Value);
+            writer.WriteLine((int)(numberNodesGoal.Value));
             writer.WriteLine(weightReactivity.Value);
 
             writer.WriteLine(textBoxResultsName.Text);
@@ -271,7 +271,7 @@ namespace Evolve
             groupBoxWeightCollision.Enabled = value;
             groupBoxWeightConstitution.Enabled = value;
             groupBoxWeightHeight.Enabled = value;
-            groupBoxWeightLoad.Enabled = value;
+            //groupBoxWeightLoad.Enabled = value;
             groupBoxWeightMovevement.Enabled = value;
             buttonOpenResults.Enabled = value;
             buttonSimulate.Enabled = value;

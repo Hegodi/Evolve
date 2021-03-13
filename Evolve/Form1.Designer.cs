@@ -881,22 +881,26 @@ namespace Evolve
             // 
             // numberNodesGoal
             // 
-            this.numberNodesGoal.DecimalPlaces = 1;
             this.numberNodesGoal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numberNodesGoal.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
             this.numberNodesGoal.Location = new System.Drawing.Point(265, 3);
+            this.numberNodesGoal.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
             this.numberNodesGoal.Minimum = new decimal(new int[] {
-            100,
+            2,
             0,
             0,
-            -2147483648});
+            0});
             this.numberNodesGoal.Name = "numberNodesGoal";
             this.numberNodesGoal.Size = new System.Drawing.Size(134, 20);
             this.numberNodesGoal.TabIndex = 1;
+            this.numberNodesGoal.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             // 
             // label20
             // 
@@ -1199,6 +1203,7 @@ namespace Evolve
             // 
             this.groupBoxWeightLoad.Controls.Add(this.tableLayoutPanel20);
             this.groupBoxWeightLoad.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxWeightLoad.Enabled = false;
             this.groupBoxWeightLoad.Location = new System.Drawing.Point(3, 238);
             this.groupBoxWeightLoad.Name = "groupBoxWeightLoad";
             this.groupBoxWeightLoad.Size = new System.Drawing.Size(408, 73);
