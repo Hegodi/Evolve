@@ -17,6 +17,8 @@ void CTraining::Run(STrainingSettings const& settings, ProgressCallback progress
 	m_settings = settings;
 	m_epochs = 0;
 
+	srand(m_settings.m_randomSeed);
+
 	m_baseFileName = m_settings.m_resultsName + std::string("\\Epoch_");
 
 	std::cout << "NAME: " << m_settings.m_resultsName << "\n\n";
@@ -75,9 +77,11 @@ void CTraining::Run(STrainingSettings const& settings, ProgressCallback progress
 	}
 
 	SendMessage(EMessageCode_Info, "Initizalization DONE");
+	bool m_isSaved = false;
 	while (m_epochs < m_settings.m_maxEpochs && !m_abortTraining)
 	{
 
+		m_isSaved = false;
 		evolutionaryAlgorithm.NextGeneration();
 
 		threads.clear();
@@ -97,6 +101,7 @@ void CTraining::Run(STrainingSettings const& settings, ProgressCallback progress
 		if (m_epochs % m_settings.m_periodSave == 0 && m_epochs > 0)
 		{
 			SaveResults(evolutionaryAlgorithm);
+			m_isSaved = true;
 		}
 
 		if (m_epochs % m_settings.m_periodOutput == 0 && m_epochs > 0)
@@ -109,9 +114,10 @@ void CTraining::Run(STrainingSettings const& settings, ProgressCallback progress
 		m_epochs++;
 	}
 
-	if (m_epochs == m_settings.m_maxEpochs && m_epochs % m_settings.m_periodSave != 0)
+	if (!m_isSaved)
 	{
 		SaveResults(evolutionaryAlgorithm);
+		m_isSaved = true;
 	}
 
 	if (m_abortTraining)

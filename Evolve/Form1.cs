@@ -74,6 +74,7 @@ namespace Evolve
                 settings.m_periodSave = (int)numericUpDownSaveFreq.Value;
                 settings.m_periodOutput = (int)numericUpDownOutputFreq.Value;
                 settings.m_numberThreads = (int)numericUpDownNumThreads.Value;
+                settings.m_randomSeed = (int) numericUpDownRandomSeed.Value;
                 settings.m_resultName = filename;
 
                 buttonStartStopTraining.Text = "Abort Training";
@@ -270,7 +271,6 @@ namespace Evolve
                     }
                 }
             }
-
 
             EvolveKernelAPI.DisposeRobotInfo(dataRobot);
         }
