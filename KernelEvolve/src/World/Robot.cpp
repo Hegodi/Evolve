@@ -36,14 +36,10 @@ void CRobot::Init(Dna const& dna)
 
 void CRobot::CreateNodesAndSprings(Dna const& dna)
 {
-	std::cout << "================== ROBOT ====================\n";
 	for (int i = 0; i < DNA_LENGTH; i++)
 	{
 		m_dna[i] = dna[i];
-		std::cout << (int)m_dna[i] << " ";
 	}
-	std::cout << std::endl;
-	std::cout << "=============================================\n";
 
 	CNode* nodesTmp = new CNode[MAX_NODES];
 	int nodesNewIndices[MAX_NODES];

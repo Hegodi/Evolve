@@ -33,6 +33,7 @@ int AbortTraining()
 {
 	if (!CStaticAnchor::ms_training.IsRunning())
 	{
+		std::cout << "Training not running!\n";
 		return -2;
 	}
 

@@ -24,6 +24,7 @@ struct STrainingSettings
     float m_weightAverageHeight;
     float m_weightLoadDistanceTraveled;
     float m_weightLoadCollisionsWithGround;
+    float m_numberNodesGoal;
     float m_weightNumberNodes;
     float m_weightReactivity;
 };

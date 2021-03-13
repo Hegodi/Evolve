@@ -35,6 +35,7 @@ namespace Evolve
             public float m_weightAverageHeight;
             public float m_weightLoadDistanceTraveled;
             public float m_weightLoadCollisionsWithGround;
+            public float m_numberNodesGoal;
             public float m_weightNumberNodes;
             public float m_weightReactivity;
         }

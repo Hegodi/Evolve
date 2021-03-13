@@ -17,18 +17,6 @@ void CTraining::Run(STrainingSettings const& settings, ProgressCallback progress
 	m_settings = settings;
 	m_epochs = 0;
 
-	std::cout << "=================================================\n";
-	std::cout << m_settings.m_weightAverageHeight << std::endl;
-	std::cout << m_settings.m_weightCollisionsWithGround << std::endl;
-	std::cout << m_settings.m_weightCollisionsWithObstacles << std::endl;
-	std::cout << m_settings.m_weightDistanceTraveled << std::endl;
-	std::cout << m_settings.m_weightLoadCollisionsWithGround << std::endl;
-	std::cout << m_settings.m_weightLoadDistanceTraveled << std::endl;
-	std::cout << m_settings.m_weightMaxHeight << std::endl;
-	std::cout << m_settings.m_weightNumberNodes << std::endl;
-	std::cout << m_settings.m_weightReactivity << std::endl;
-	std::cout << "=================================================\n";
-
 	srand(m_settings.m_randomSeed);
 
 	m_baseFileName = m_settings.m_resultsName + std::string("\\Epoch_");
@@ -76,6 +64,7 @@ void CTraining::Run(STrainingSettings const& settings, ProgressCallback progress
 		{
 			GeneticAlgorithm::InitRandom(dna);
 			robot.Init(dna);
+			attempt++;
 		}
 
 		float score = EvaluateCreature(robot, m_settings);
@@ -89,7 +78,7 @@ void CTraining::Run(STrainingSettings const& settings, ProgressCallback progress
 	}
 
 	SendMessage(EMessageCode_Info, "Initizalization DONE");
-	bool m_isSaved = false;
+	bool m_isSaved = true;
 	while (m_epochs < m_settings.m_maxEpochs && !m_abortTraining)
 	{
 

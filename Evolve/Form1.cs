@@ -92,6 +92,7 @@ namespace Evolve
                 settings.m_weightAverageHeight = (float) weightAverageHeight.Value;
                 settings.m_weightLoadDistanceTraveled = (float) weightLoadDistanceTraveled.Value;
                 settings.m_weightLoadCollisionsWithGround = (float) weightLoadCollisionsGround.Value;
+                settings.m_numberNodesGoal = (float)numberNodesGoal.Value;
                 settings.m_weightNumberNodes = (float)weightNumberNodes.Value;
                 settings.m_weightReactivity = (float)weightReactivity.Value;
 
@@ -142,8 +143,8 @@ namespace Evolve
         {
             numericUpDownPopulationSize.Value = 1000;
             numericUpDownDirectPromotions.Value = 5;
-            numericUpDownMutationRate.Value = (decimal)0.001;
-            numericUpDownParentSel.Value = 2;
+            numericUpDownMutationRate.Value = (decimal)0.01;
+            numericUpDownParentSel.Value = 5;
             numericUpDownMaxEpochs.Value = 100;
             numericUpDownSaveFreq.Value = 10;
             numericUpDownOutputFreq.Value = 1;
@@ -217,6 +218,11 @@ namespace Evolve
             richTextBoxResultSelected.Text = "";
 
             if (listBoxResults.SelectedIndex < 0 || listBoxResults.SelectedIndex >= listBoxResults.Items.Count)
+            {
+                return;
+            }
+
+            if (!File.Exists(m_resultFilenames[listBoxResults.SelectedIndex]))
             {
                 return;
             }

@@ -60,13 +60,6 @@ namespace GeneticAlgorithm
 				result = true;
 			}
 
-			std::cout << "================== READ DNA ====================\n";
-			for (int i = 0; i < DNA_LENGTH; i++)
-			{
-				std::cout << (int)dna[i] << " ";
-			}
-			std::cout << std::endl;
-			std::cout << "=============================================\n";
 			fclose(fd);
 		}
 		else
@@ -80,7 +73,7 @@ namespace GeneticAlgorithm
 	void Save(Dna const& dna, std::string filename)
 	{
 		FILE* fd;
-		fopen_s(&fd, filename.c_str(), "w");
+		fopen_s(&fd, filename.c_str(), "wb");
 		if (fd != nullptr)
 		{
 			int dnaLength = DNA_LENGTH;

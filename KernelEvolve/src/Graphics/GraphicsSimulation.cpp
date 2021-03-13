@@ -90,6 +90,11 @@ void CGraphicsSimulation::Render()
 		}
 		DrawLine(pos1.x, pos1.y, pos2.x, pos2.y, color);
 	}
+
+	Vec2f center = m_world->GetCenter();
+	static char buffer[128];
+	sprintf_s(buffer, "Pos: %.2f, %.2f", center.x, center.y);
+	DrawString(5, ScreenHeight() - 10, buffer);
 }
 
 void CGraphicsSimulation::RenderBackground()
