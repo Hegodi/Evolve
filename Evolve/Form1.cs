@@ -6,57 +6,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace Evolve
 {
     public partial class Form1 : Form
     {
-        [StructLayout(LayoutKind.Sequential)]
-        public struct TrainingSettings
-        {
-            public int m_populationSize;
-	        public int m_directPromotion;
-	        public float m_mutationRate;
-	        public int m_roundsParentSelection;
-	        public int m_maxEpochs;
-	        public int m_periodSave;
-	        public int m_periodOutput;
-	        public int m_numberThreads;
-            public int m_randomSeed;
-            public string m_resultName;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct GraphicsSimulationSettings
-        {
-            public string m_dnaFilename;
-        }
-
-        enum EMessageCodes
-        {
-            EMessageCode_Info,
-            EMessageCode_InfoHigh,
-            EMessageCode_Warning,
-            EMessageCode_Error
-        }
-
-        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate void MessageCallback(int msgCode, string message);
-
-        [DllImport("KernelEvolve.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int StartTraining(TrainingSettings settings, [MarshalAs(UnmanagedType.FunctionPtr)] MessageCallback callbackPointer);
-
-        [DllImport("KernelEvolve.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int AbortTraining();
-
-        [DllImport("KernelEvolve.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int NumberEpochs();
-
-        [DllImport("KernelEvolve.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int RunGraphicsSimulation(GraphicsSimulationSettings settings);
 
         private delegate void DelegateProcessMessage(int msgCode, string text);
 
@@ -78,7 +35,7 @@ namespace Evolve
         {
             if (m_workerThread != null && m_workerThread.IsAlive)
             {
-                AbortTraining();
+                EvolveKernelAPI.AbortTraining();
                 buttonStartStopTraining.Text = "Start Training";
             }
             else
@@ -93,11 +50,11 @@ namespace Evolve
                     if (result == DialogResult.Yes)
                     {
                         createDirectory = false;
-                        UpdateInfoLog((int)EMessageCodes.EMessageCode_Warning, "Results in '" + filename + "' will be overriden");
+                        UpdateInfoLog((int)EvolveKernelAPI.EMessageCodes.EMessageCode_Warning, "Results in '" + filename + "' will be overriden");
                     }
                     else
                     {
-                        UpdateInfoLog((int)EMessageCodes.EMessageCode_Error, "Folder named '" + filename + "' already exist");
+                        UpdateInfoLog((int)EvolveKernelAPI.EMessageCodes.EMessageCode_Error, "Folder named '" + filename + "' already exist");
                         return;
                     }
                 }
@@ -105,10 +62,10 @@ namespace Evolve
                 if (createDirectory)
                 {
                     Directory.CreateDirectory(filename);
-                    UpdateInfoLog((int)EMessageCodes.EMessageCode_InfoHigh, "Created directory '" + filename + "'");
+                    UpdateInfoLog((int)EvolveKernelAPI.EMessageCodes.EMessageCode_InfoHigh, "Created directory '" + filename + "'");
                 }
 
-                TrainingSettings settings = new TrainingSettings();
+                EvolveKernelAPI.TrainingSettings settings = new EvolveKernelAPI.TrainingSettings();
                 settings.m_populationSize = (int)numericUpDownPopulationSize.Value;
                 settings.m_directPromotion = (int)numericUpDownDirectPromotions.Value;
                 settings.m_mutationRate = (float)numericUpDownMutationRate.Value;
@@ -133,7 +90,7 @@ namespace Evolve
 
         private void UpdateInfoLog(int msgCodeInt, string message)
         {
-            EMessageCodes msgCode = (EMessageCodes)msgCodeInt;
+            EvolveKernelAPI.EMessageCodes msgCode = (EvolveKernelAPI.EMessageCodes)msgCodeInt;
 
             textBoxInfo.SelectionStart = textBoxInfo.TextLength;
             textBoxInfo.SelectionLength = 0;
@@ -141,16 +98,16 @@ namespace Evolve
             Color color = Color.Black;
             switch (msgCode)
             {
-                case EMessageCodes.EMessageCode_Info:
+                case EvolveKernelAPI.EMessageCodes.EMessageCode_Info:
                     color = Color.Black;
                     break;
-                case EMessageCodes.EMessageCode_InfoHigh:
+                case EvolveKernelAPI.EMessageCodes.EMessageCode_InfoHigh:
                     color = Color.Blue;
                     break;
-                case EMessageCodes.EMessageCode_Warning:
+                case EvolveKernelAPI.EMessageCodes.EMessageCode_Warning:
                     color = Color.Orange;
                     break;
-                case EMessageCodes.EMessageCode_Error:
+                case EvolveKernelAPI.EMessageCodes.EMessageCode_Error:
                     color = Color.Red;
                     break;
             }
@@ -175,9 +132,9 @@ namespace Evolve
             textBoxResultsName.Text = "NewResults";
         }
 
-        public static void WorkerThreadEntryPoint(TrainingSettings settings, MessageCallback callback)
+        private static void WorkerThreadEntryPoint(EvolveKernelAPI.TrainingSettings settings, EvolveKernelAPI.MessageCallback callback)
         {
-            StartTraining(settings, callback);
+            EvolveKernelAPI.StartTraining(settings, callback);
         }
 
         private void buttonLoadSettings_Click(object sender, EventArgs e)
@@ -204,7 +161,7 @@ namespace Evolve
             }
 
             m_resultFilenames = Directory.GetFiles(folderBrowserDialogResults.SelectedPath, "*.gar");
-            for (int i=0; i<m_resultFilenames.Length; i++)
+            for (int i = 0; i < m_resultFilenames.Length; i++)
             {
                 string name = Path.GetFileName(m_resultFilenames[i]);
                 listBoxResults.Items.Add(name);
@@ -223,15 +180,99 @@ namespace Evolve
 
             if (listBoxResults.SelectedIndex >= 0 && listBoxResults.SelectedIndex < listBoxResults.Items.Count)
             {
-                GraphicsSimulationSettings settings;
+                EvolveKernelAPI.GraphicsSimulationSettings settings;
                 settings.m_dnaFilename = m_resultFilenames[listBoxResults.SelectedIndex];
                 m_simulationThread = new Thread(() => SimulationThreadEntryPoint(settings));
                 m_simulationThread.Start();
             }
         }
-        public static void SimulationThreadEntryPoint(GraphicsSimulationSettings settings)
+        private static void SimulationThreadEntryPoint(EvolveKernelAPI.GraphicsSimulationSettings settings)
         {
-            RunGraphicsSimulation(settings);
+            EvolveKernelAPI.RunGraphicsSimulation(settings);
+        }
+
+        private void listBoxResults_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            richTextBoxResultSelected.Text = "";
+
+            if (listBoxResults.SelectedIndex < 0 || listBoxResults.SelectedIndex >= listBoxResults.Items.Count)
+            {
+                return;
+            }
+
+            IntPtr dataRobot = EvolveKernelAPI.CreateRobotInfo(m_resultFilenames[listBoxResults.SelectedIndex]);
+            if (dataRobot == null)
+            {
+                return;
+            }
+
+            EvolveKernelAPI.RobotInfo robotInfo = (EvolveKernelAPI.RobotInfo)Marshal.PtrToStructure(dataRobot, typeof(EvolveKernelAPI.RobotInfo));
+
+            Console.WriteLine("Num Nodes: " + robotInfo.m_numNodes);
+            richTextBoxResultSelected.AppendText("Number Nodes: " + robotInfo.m_numNodes);
+            richTextBoxResultSelected.AppendText(Environment.NewLine);
+            richTextBoxResultSelected.AppendText("Number Srpings: " + robotInfo.m_numSprings);
+            richTextBoxResultSelected.AppendText(Environment.NewLine);
+            richTextBoxResultSelected.AppendText(Environment.NewLine);
+
+            if (robotInfo.m_nodes != IntPtr.Zero) 
+            {
+                richTextBoxResultSelected.AppendText("NODES:");
+                richTextBoxResultSelected.AppendText(Environment.NewLine);
+                int structNodeInfoSize = Marshal.SizeOf(typeof(EvolveKernelAPI.NodeInfo));
+                for (int i = 0; i < robotInfo.m_numNodes; ++i)
+                {
+                    IntPtr data = new IntPtr(robotInfo.m_nodes.ToInt64() + structNodeInfoSize * i);
+                    if (data == IntPtr.Zero)
+                    {
+                        Console.WriteLine("ERROR: data == null");
+                        continue;
+                    }
+                    EvolveKernelAPI.NodeInfo nodeInfo = (EvolveKernelAPI.NodeInfo)Marshal.PtrToStructure(data, typeof(EvolveKernelAPI.NodeInfo));
+                    richTextBoxResultSelected.AppendText("Node " + i);
+                    richTextBoxResultSelected.AppendText(Environment.NewLine);
+                    richTextBoxResultSelected.AppendText("     Position: " + nodeInfo.m_posX + ", " + nodeInfo.m_posY);
+                    richTextBoxResultSelected.AppendText(Environment.NewLine);
+                    richTextBoxResultSelected.AppendText("     Radius: " + nodeInfo.m_radius);
+                    richTextBoxResultSelected.AppendText(Environment.NewLine);
+                    richTextBoxResultSelected.AppendText("     Elastic Coefficient: " + nodeInfo.m_elasticCoefficient);
+                    richTextBoxResultSelected.AppendText(Environment.NewLine);
+                    richTextBoxResultSelected.AppendText("     Friction Coefficient: " + nodeInfo.m_frictionCoefficient);
+                    richTextBoxResultSelected.AppendText(Environment.NewLine);
+                }
+
+                richTextBoxResultSelected.AppendText(Environment.NewLine);
+                richTextBoxResultSelected.AppendText("SPRINGS:");
+                richTextBoxResultSelected.AppendText(Environment.NewLine);
+                for (int i = 0; i < robotInfo.m_numSprings; ++i)
+                {
+                    int structSpringInfoSize = Marshal.SizeOf(typeof(EvolveKernelAPI.SpringInfo));
+                    IntPtr data = new IntPtr(robotInfo.m_springs.ToInt64() + structSpringInfoSize * i);
+                    if (data == IntPtr.Zero)
+                    {
+                        Console.WriteLine("ERROR: data == null");
+                        continue;
+                    }
+                    EvolveKernelAPI.SpringInfo springInfo = (EvolveKernelAPI.SpringInfo)Marshal.PtrToStructure(data, typeof(EvolveKernelAPI.SpringInfo));
+                    richTextBoxResultSelected.AppendText("Spring " + i + ":  Node " + springInfo.m_indNodeStart + " - Node " + springInfo.m_indNodeEnd);
+                    richTextBoxResultSelected.AppendText(Environment.NewLine);
+                    richTextBoxResultSelected.AppendText("     Length: " + springInfo.m_length);
+                    richTextBoxResultSelected.AppendText(Environment.NewLine);
+                    richTextBoxResultSelected.AppendText("     Spring Constant: " + springInfo.m_springConstant);
+                    richTextBoxResultSelected.AppendText(Environment.NewLine);
+                    if (springInfo.m_deltaLength > 0.0)
+                    {
+                        richTextBoxResultSelected.AppendText("     Length Variation Factor: " + springInfo.m_deltaLength);
+                        richTextBoxResultSelected.AppendText(Environment.NewLine);
+                        richTextBoxResultSelected.AppendText("     Period Variation: " + springInfo.m_period);
+                        richTextBoxResultSelected.AppendText(Environment.NewLine);
+
+                    }
+                }
+            }
+
+
+            EvolveKernelAPI.DisposeRobotInfo(dataRobot);
         }
     }
 }

@@ -917,6 +917,7 @@ namespace Evolve
             this.listBoxResults.Name = "listBoxResults";
             this.listBoxResults.Size = new System.Drawing.Size(512, 413);
             this.listBoxResults.TabIndex = 0;
+            this.listBoxResults.SelectedIndexChanged += new System.EventHandler(this.listBoxResults_SelectedIndexChanged);
             // 
             // richTextBoxResultSelected
             // 

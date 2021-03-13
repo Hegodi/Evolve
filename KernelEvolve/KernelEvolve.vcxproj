@@ -160,7 +160,6 @@
     <ClCompile Include="src\Physics\Node.cpp" />
     <ClCompile Include="src\Physics\Spring.cpp" />
     <ClCompile Include="src\ScoreFunctions.cpp" />
-    <ClCompile Include="src\Simulation.cpp" />
     <ClCompile Include="src\StaticAnchor.cpp" />
     <ClCompile Include="src\Training.cpp" />
     <ClCompile Include="src\World\Robot.cpp" />
@@ -176,7 +175,6 @@
     <ClInclude Include="src\Physics\Spring.h" />
     <ClInclude Include="src\Physics\Vector2D.h" />
     <ClInclude Include="src\ScoreFunctions.h" />
-    <ClInclude Include="src\Simulation.h" />
     <ClInclude Include="src\StaticAnchor.h" />
     <ClInclude Include="src\Training.h" />
     <ClInclude Include="src\World\Robot.h" />

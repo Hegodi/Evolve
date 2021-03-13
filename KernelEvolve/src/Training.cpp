@@ -3,6 +3,7 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <stdlib.h>
 
 #include "World/World.h"
 #include "ScoreFunctions.h"
@@ -128,7 +129,9 @@ void CTraining::Run(STrainingSettings const& settings, ProgressCallback progress
 void CTraining::SaveResults(GeneticAlgorithm::CEvolutionaryAlgorithm& evolutionaryAlgorithm)
 {
 	evolutionaryAlgorithm.SortPopulation();
-	std::string filename = m_baseFileName + std::to_string(m_epochs) + ".gar";
+	char buffer[128];
+	sprintf_s(buffer,"%05d.gar", m_epochs);
+	std::string filename = m_baseFileName + buffer;
 	GeneticAlgorithm::Save(evolutionaryAlgorithm.GetDna(0), filename);
 	SendMessageSaved(filename);
 }
