@@ -6,11 +6,15 @@
 #include "olcPixelGameEngine.h"
 #include "../World/World.h"
 
+struct SGraphicsSimulationSettings
+{
+	const char* m_dnaFilename;
+};
 
-class CGraphics : public olc::PixelGameEngine
+class CGraphicsSimulation : public olc::PixelGameEngine
 {
 public:
-	CGraphics(CWorld* const& world)
+	CGraphicsSimulation(CWorld* const& world)
 	{
 		sAppName = "Spring Robots Simulator";
 		m_world = world;

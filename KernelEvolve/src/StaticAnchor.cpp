@@ -5,9 +5,12 @@
 
 //CTraining* CStaticAnchor::ms_training = new CTraining();
 CTraining CStaticAnchor::ms_training;
-CSimulation CStaticAnchor::ms_simulation;
 
 
+//////////////////////////////////////////////////////////////////////////////////////
+//
+//		Training
+//
 int StartTraining(STrainingSettings settings, ProgressCallback progressCallback)
 {
 	if (CStaticAnchor::ms_training.IsRunning())
@@ -44,89 +47,29 @@ int NumberEpochs()
 }
 
 
-int SetupSimulation(SSimulationSettings settings)
-{
-	CStaticAnchor::ms_simulation.Setup(settings);
-	return 0;
-}
-
-//int RunSimulation(int iterations)
-//{
-	//CStaticAnchor::ms_simulation.Run(iterations);
-	//return 0;
-//}
-
-SGraphicsSpring* GetSpringsInWorld()
-{
-	std::vector<SGraphicsSpring> springs = CStaticAnchor::ms_simulation.GetGraphicSprings();
-	return &springs[0];
-}
-
-SGraphicsNode* GetNodesInWorld()
-{
-	std::vector<SGraphicsNode> nodes = CStaticAnchor::ms_simulation.GetGraphicNodes();
-	return &nodes[0];
-}
-
-int GetNumberSpringsInWorld()
-{
-	return CStaticAnchor::ms_simulation.GetGraphicSprings().size();
-}
-
-int GetNumberNodesInWorld()
-{
-	return CStaticAnchor::ms_simulation.GetGraphicNodes().size();
-}
-
-float GetWorldXmin()
-{
-	return CStaticAnchor::ms_simulation.GetWorldXmin();
-}
-
-float GetWorldXmax()
-{
-	return CStaticAnchor::ms_simulation.GetWorldXmax();
-}
-
+//////////////////////////////////////////////////////////////////////////////////////
+//
+//		Graphic Simulation
+//
 
 #define OLC_PGE_APPLICATION
-#include "Graphics/Graphics.h"
+#include "Graphics/GraphicsSimulation.h"
 
 // Override base class with your custom functionality
-int RunSimulation(int iterations)
+int RunGraphicsSimulation(SGraphicsSimulationSettings settings)
 {
 	// World
 	CWorld* world = new CWorld();
 
-	CNode* n1 = new CNode(4.0f, 1.0f, 1.0f, Vec2f(0.0f, 8.0f), false);
-	CNode* n2 = new CNode(2.0f, 1.0f, 1.0f, Vec2f(-8.0f, 2.5f), false);
-	CNode* n3 = new CNode(2.0f, 1.0f, 1.0f, Vec2f(8.0f, 2.5f), false);
-	CNode* n4 = new CNode(2.0f, 1.0f, 1.0f, Vec2f(0.0f, 20.0f), false);
-
-	CSpring* s1 = new CSpringPasive(1.0f, 14.0f);
-	CSpring* s2 = new CSpringPasive(1.0f, 4.0f);
-	CSpring* s3 = new CSpringPasive(1.0f, 14.0f);
-
-	s1->Connect(n1, n2);
-	s2->Connect(n2, n3);
-	s3->Connect(n3, n1);
-	
-	world->AddNode(n1);
-	world->AddNode(n2);
-	world->AddNode(n3);
-	world->AddNode(n4);
-	world->AddSpring(s1);
-	world->AddSpring(s2);
-	world->AddSpring(s3);
-
+	GeneticAlgorithm::Dna dna;
+	GeneticAlgorithm::Load(dna, settings.m_dnaFilename);
+	CRobot robot(dna);
+	world->AddRobot(robot);
 	// Load Robots
-	CGraphics game(world);
+	CGraphicsSimulation game(world);
 	if (game.Construct(600, 600, 1, 1))
 			game.Start();
 
-	delete n1;
-	delete n2;
 	delete world;
-
 	return 0;
 }

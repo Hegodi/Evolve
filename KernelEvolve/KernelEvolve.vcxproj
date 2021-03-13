@@ -156,7 +156,7 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="src\Evolution\EvolutionaryAlgorithm.cpp" />
     <ClCompile Include="src\Evolution\GeneticAlgorithm.cpp" />
-    <ClCompile Include="src\Graphics\Graphics.cpp" />
+    <ClCompile Include="src\Graphics\GraphicsSimulation.cpp" />
     <ClCompile Include="src\Physics\Node.cpp" />
     <ClCompile Include="src\Physics\Spring.cpp" />
     <ClCompile Include="src\ScoreFunctions.cpp" />
@@ -169,7 +169,7 @@
   <ItemGroup>
     <ClInclude Include="src\Evolution\EvolutionaryAlgorithm.h" />
     <ClInclude Include="src\Evolution\GeneticAlgorithm.h" />
-    <ClInclude Include="src\Graphics\Graphics.h" />
+    <ClInclude Include="src\Graphics\GraphicsSimulation.h" />
     <ClInclude Include="src\Graphics\olcPixelGameEngine.h" />
     <ClInclude Include="src\Physics\Node.h" />
     <ClInclude Include="src\Physics\Object.h" />

@@ -1,10 +1,10 @@
 
 #include <vector>
 #include <string>
-#include "Graphics.h"
+#include "GraphicsSimulation.h"
 
 
-bool CGraphics::OnUserUpdate(float fElapsedTime) 
+bool CGraphicsSimulation::OnUserUpdate(float fElapsedTime) 
 {
 	m_world->Update();
 	m_offsetTarget = m_world->GetCenter() * m_scale;
@@ -15,7 +15,7 @@ bool CGraphics::OnUserUpdate(float fElapsedTime)
 	return true;
 }
 
-void CGraphics::CheckUserInput()
+void CGraphicsSimulation::CheckUserInput()
 {
 	if (GetKey(olc::Key::K1).bPressed)
 	{
@@ -41,7 +41,7 @@ void CGraphics::CheckUserInput()
 	}
 }
 
-void CGraphics::Render()
+void CGraphicsSimulation::Render()
 {
 	Clear(olc::BLACK);
 	RenderBackground();
@@ -92,7 +92,7 @@ void CGraphics::Render()
 	}
 }
 
-void CGraphics::RenderBackground()
+void CGraphicsSimulation::RenderBackground()
 {
 	float lenght = ScreenHeight();
 	float deltaX = 10.0f * m_scale;
@@ -127,7 +127,7 @@ void CGraphics::RenderBackground()
 	DrawString(ScreenWidth() - 100, 10, textTime, olc::GREY);
 }
 
-void CGraphics::RenderWorldInfo()
+void CGraphicsSimulation::RenderWorldInfo()
 {
 	if (m_nodeSelected != nullptr)
 	{
@@ -162,7 +162,7 @@ void CGraphics::RenderWorldInfo()
 	}
 }
 
-void CGraphics::FixGraphicPosition(Vec2f& pos)
+void CGraphicsSimulation::FixGraphicPosition(Vec2f& pos)
 {
 	pos.y = 0.8f * ScreenHeight() - pos.y;
 	pos.x += ScreenWidth() * 0.5f;

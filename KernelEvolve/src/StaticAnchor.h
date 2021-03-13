@@ -9,7 +9,7 @@
 class CTraining;
 class CSimulation;
 struct STrainingSettings;
-struct SSimulationSettings;
+struct SGraphicsSimulationSettings;
 struct SGraphicsNode;
 struct SGraphicsSpring;
 
@@ -17,7 +17,6 @@ class CStaticAnchor
 {
 public:
 	static CTraining ms_training;
-	static CSimulation ms_simulation;
 };
 
 enum EMessageCode
@@ -34,8 +33,7 @@ extern "C"
 	DLLEXPORT int StartTraining(STrainingSettings settings, ProgressCallback progressCallback);
 	DLLEXPORT int AbortTraining();
 	DLLEXPORT int NumberEpochs();
-	DLLEXPORT int SetupSimulation(SSimulationSettings settings);
-	DLLEXPORT int RunSimulation(int iterations);
+	DLLEXPORT int RunGraphicsSimulation(SGraphicsSimulationSettings settings);
 	DLLEXPORT int GetNumberNodesInWorld();
 	DLLEXPORT int GetNumberSpringsInWorld();
 	DLLEXPORT float GetWorldXmin();

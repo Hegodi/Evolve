@@ -29,6 +29,12 @@ namespace Evolve
             public string m_resultName;
         }
 
+        [StructLayout(LayoutKind.Sequential)]
+        public struct GraphicsSimulationSettings
+        {
+            public string m_dnaFilename;
+        }
+
         enum EMessageCodes
         {
             EMessageCode_Info,
@@ -41,8 +47,7 @@ namespace Evolve
         public delegate void MessageCallback(int msgCode, string message);
 
         [DllImport("KernelEvolve.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void StartTraining(TrainingSettings settings, [MarshalAs(UnmanagedType.FunctionPtr)] MessageCallback callbackPointer);
-        //public static extern int StartTraining(TrainingSettings settings);
+        public static extern int StartTraining(TrainingSettings settings, [MarshalAs(UnmanagedType.FunctionPtr)] MessageCallback callbackPointer);
 
         [DllImport("KernelEvolve.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int AbortTraining();
@@ -50,13 +55,23 @@ namespace Evolve
         [DllImport("KernelEvolve.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int NumberEpochs();
 
+        [DllImport("KernelEvolve.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int RunGraphicsSimulation(GraphicsSimulationSettings settings);
+
         private delegate void DelegateProcessMessage(int msgCode, string text);
 
         Thread m_workerThread;
+        Thread m_simulationThread;
+
+        // Results:
+        string[] m_resultFilenames = null;
 
         public Form1()
         {
             InitializeComponent();
+            ResetSettings();
+            folderBrowserDialogResults.SelectedPath = Application.StartupPath;
+            openFileDialogSettings.InitialDirectory = Application.StartupPath;
         }
 
         private void buttonStartTraining_Click(object sender, EventArgs e)
@@ -147,6 +162,19 @@ namespace Evolve
             textBoxInfo.ScrollToCaret();
         }
 
+        void ResetSettings()
+        {
+            numericUpDownPopulationSize.Value = 1000;
+            numericUpDownDirectPromotions.Value = 5;
+            numericUpDownMutationRate.Value = (decimal)0.001;
+            numericUpDownParentSel.Value = 2;
+            numericUpDownMaxEpochs.Value = 100;
+            numericUpDownSaveFreq.Value = 10;
+            numericUpDownOutputFreq.Value = 1;
+            numericUpDownNumThreads.Value = 1;
+            textBoxResultsName.Text = "NewResults";
+        }
+
         public static void WorkerThreadEntryPoint(TrainingSettings settings, MessageCallback callback)
         {
             StartTraining(settings, callback);
@@ -158,9 +186,52 @@ namespace Evolve
 
         private void buttonNewSettings_Click(object sender, EventArgs e)
         {
+            ResetSettings();
         }
         private void buttonSaveSettings_Click(object sender, EventArgs e)
         {
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// 
+        ///     Results Visualization
+        /// 
+        private void buttonOpenResults_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialogResults.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            m_resultFilenames = Directory.GetFiles(folderBrowserDialogResults.SelectedPath, "*.gar");
+            for (int i=0; i<m_resultFilenames.Length; i++)
+            {
+                string name = Path.GetFileName(m_resultFilenames[i]);
+                listBoxResults.Items.Add(name);
+            }
+
+            textBoxResults.Text = folderBrowserDialogResults.SelectedPath;
+        }
+
+        private void buttonSimulate_Click(object sender, EventArgs e)
+        {
+            if (m_simulationThread != null && m_simulationThread.IsAlive)
+            {
+                MessageBox.Show("Another simulation is already running", "Cannot Run", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            if (listBoxResults.SelectedIndex >= 0 && listBoxResults.SelectedIndex < listBoxResults.Items.Count)
+            {
+                GraphicsSimulationSettings settings;
+                settings.m_dnaFilename = m_resultFilenames[listBoxResults.SelectedIndex];
+                m_simulationThread = new Thread(() => SimulationThreadEntryPoint(settings));
+                m_simulationThread.Start();
+            }
+        }
+        public static void SimulationThreadEntryPoint(GraphicsSimulationSettings settings)
+        {
+            RunGraphicsSimulation(settings);
         }
     }
 }

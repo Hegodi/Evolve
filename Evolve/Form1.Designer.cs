@@ -68,6 +68,7 @@ namespace Evolve
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonLoadSettings = new System.Windows.Forms.Button();
             this.buttonSaveSettings = new System.Windows.Forms.Button();
+            this.buttonNewSettings = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControlEditor = new System.Windows.Forms.TabControl();
@@ -85,7 +86,8 @@ namespace Evolve
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.listBoxResults = new System.Windows.Forms.ListBox();
             this.richTextBoxResultSelected = new System.Windows.Forms.RichTextBox();
-            this.buttonNewSettings = new System.Windows.Forms.Button();
+            this.openFileDialogSettings = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowserDialogResults = new System.Windows.Forms.FolderBrowserDialog();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -709,6 +711,17 @@ namespace Evolve
             this.buttonSaveSettings.UseVisualStyleBackColor = true;
             this.buttonSaveSettings.Click += new System.EventHandler(this.buttonSaveSettings_Click);
             // 
+            // buttonNewSettings
+            // 
+            this.buttonNewSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonNewSettings.Location = new System.Drawing.Point(323, 3);
+            this.buttonNewSettings.Name = "buttonNewSettings";
+            this.buttonNewSettings.Size = new System.Drawing.Size(98, 24);
+            this.buttonNewSettings.TabIndex = 2;
+            this.buttonNewSettings.Text = "New Settings";
+            this.buttonNewSettings.UseVisualStyleBackColor = true;
+            this.buttonNewSettings.Click += new System.EventHandler(this.buttonNewSettings_Click);
+            // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 1;
@@ -844,6 +857,7 @@ namespace Evolve
             this.buttonOpenResults.TabIndex = 0;
             this.buttonOpenResults.Text = "Open";
             this.buttonOpenResults.UseVisualStyleBackColor = true;
+            this.buttonOpenResults.Click += new System.EventHandler(this.buttonOpenResults_Click);
             // 
             // textBoxResults
             // 
@@ -878,6 +892,7 @@ namespace Evolve
             this.buttonSimulate.TabIndex = 0;
             this.buttonSimulate.Text = "Visualize";
             this.buttonSimulate.UseVisualStyleBackColor = true;
+            this.buttonSimulate.Click += new System.EventHandler(this.buttonSimulate_Click);
             // 
             // tableLayoutPanel11
             // 
@@ -914,16 +929,9 @@ namespace Evolve
             this.richTextBoxResultSelected.TabIndex = 1;
             this.richTextBoxResultSelected.Text = "";
             // 
-            // buttonNewSettings
+            // openFileDialogSettings
             // 
-            this.buttonNewSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonNewSettings.Location = new System.Drawing.Point(323, 3);
-            this.buttonNewSettings.Name = "buttonNewSettings";
-            this.buttonNewSettings.Size = new System.Drawing.Size(98, 24);
-            this.buttonNewSettings.TabIndex = 2;
-            this.buttonNewSettings.Text = "New Settings";
-            this.buttonNewSettings.UseVisualStyleBackColor = true;
-            this.buttonNewSettings.Click += new System.EventHandler(this.buttonNewSettings_Click);
+            this.openFileDialogSettings.FileName = "openFileDialog1";
             // 
             // Form1
             // 
@@ -1034,6 +1042,8 @@ namespace Evolve
         private System.Windows.Forms.ListBox listBoxResults;
         private System.Windows.Forms.RichTextBox richTextBoxResultSelected;
         private System.Windows.Forms.Button buttonNewSettings;
+        private System.Windows.Forms.OpenFileDialog openFileDialogSettings;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogResults;
     }
 }
 

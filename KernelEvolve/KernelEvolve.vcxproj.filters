@@ -48,7 +48,7 @@
     <ClCompile Include="src\Simulation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\Graphics.cpp">
+    <ClCompile Include="src\Graphics\GraphicsSimulation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -89,10 +89,10 @@
     <ClInclude Include="src\Simulation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Graphics\Graphics.h">
+    <ClInclude Include="src\Graphics\olcPixelGameEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Graphics\olcPixelGameEngine.h">
+    <ClInclude Include="src\Graphics\GraphicsSimulation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
