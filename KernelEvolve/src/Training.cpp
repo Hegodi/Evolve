@@ -123,7 +123,7 @@ void CTraining::Run(STrainingSettings const& settings, ProgressCallback progress
 
 	if (m_abortTraining)
 	{
-		SendMessage(EMessageCode_Error, "Training aborted");
+		SendMessage(EMessageCode_InfoHigh, "Training aborted");
 	}
 	else
 	{

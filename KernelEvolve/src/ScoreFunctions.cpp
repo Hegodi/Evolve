@@ -53,7 +53,7 @@ float EvaluateCreature(CRobot const& robot, STrainingSettings const& settings, f
 	// Load Distance traveled
 	// Load collisions with ground
 	int deltaNodes = (robot.GetNumberNodes() - settings.m_numberNodesGoal);
-	score += deltaNodes * deltaNodes * settings.m_weightNumberNodes;
+	score -= deltaNodes * deltaNodes * settings.m_weightNumberNodes;
 	score += robot.ComputeReactivity() * settings.m_weightReactivity;
 
 	return score;

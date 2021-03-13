@@ -37,10 +37,11 @@ namespace Evolve
             {
                 EvolveKernelAPI.AbortTraining();
                 buttonStartStopTraining.Text = "Start Training";
+                SetEnableButtons(true);
             }
             else
             {
-
+                textBoxInfo.Text = "";
                 string filename = textBoxResultsName.Text;
 
                 bool createDirectory = true;
@@ -99,6 +100,7 @@ namespace Evolve
                 buttonStartStopTraining.Text = "Abort Training";
                 m_workerThread = new Thread(() => WorkerThreadEntryPoint(settings, OnProgressCallback));
                 m_workerThread.Start();
+                SetEnableButtons(false);
             }
         }
 
@@ -125,10 +127,12 @@ namespace Evolve
                     color = Color.Blue;
                     break;
                 case EvolveKernelAPI.EMessageCodes.EMessageCode_Warning:
-                    color = Color.Orange;
+                    color = Color.DarkOrange;
+                    message = "WARNING: " + message;
                     break;
                 case EvolveKernelAPI.EMessageCodes.EMessageCode_Error:
                     color = Color.Red;
+                    message = "ERROR: " + message;
                     break;
             }
             textBoxInfo.SelectionColor = color;
@@ -149,7 +153,21 @@ namespace Evolve
             numericUpDownSaveFreq.Value = 10;
             numericUpDownOutputFreq.Value = 1;
             numericUpDownNumThreads.Value = 1;
+            numericUpDownRandomSeed.Value = 0;
+
+            weightAverageHeight.Value = 0;
+            weightCollisionsGround.Value = 0;
+            weightCollisionsObstacles.Value = 0;
+            weightDistanceTraveled.Value = 1;
+            weightLoadCollisionsGround.Value = 0;
+            weightLoadDistanceTraveled.Value = 0;
+            weightMaxHeight.Value = 0;
+            weightNumberNodes.Value = 0;
+            numberNodesGoal.Value = 2;
+            weightReactivity.Value = 0;
+
             textBoxResultsName.Text = "NewResults";
+            labelSettingsFilename.Text = "New Settings (not saved)";
         }
 
         private static void WorkerThreadEntryPoint(EvolveKernelAPI.TrainingSettings settings, EvolveKernelAPI.MessageCallback callback)
@@ -159,6 +177,38 @@ namespace Evolve
 
         private void buttonLoadSettings_Click(object sender, EventArgs e)
         {
+            openFileDialogSettings.CheckFileExists = true;
+            if (openFileDialogSettings.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            StreamReader reader = new StreamReader(openFileDialogSettings.FileName);
+            numericUpDownPopulationSize.Value = decimal.Parse(reader.ReadLine());
+            numericUpDownDirectPromotions.Value = decimal.Parse(reader.ReadLine());
+            numericUpDownMutationRate.Value = decimal.Parse(reader.ReadLine());
+            numericUpDownParentSel.Value = decimal.Parse(reader.ReadLine());
+            numericUpDownMaxEpochs.Value = decimal.Parse(reader.ReadLine());
+            numericUpDownSaveFreq.Value = decimal.Parse(reader.ReadLine());
+            numericUpDownOutputFreq.Value = decimal.Parse(reader.ReadLine());
+            numericUpDownNumThreads.Value = decimal.Parse(reader.ReadLine());
+            numericUpDownRandomSeed.Value = decimal.Parse(reader.ReadLine());
+
+            weightAverageHeight.Value = decimal.Parse(reader.ReadLine());
+            weightCollisionsGround.Value = decimal.Parse(reader.ReadLine());
+            weightCollisionsObstacles.Value = decimal.Parse(reader.ReadLine());
+            weightDistanceTraveled.Value = decimal.Parse(reader.ReadLine());
+            weightLoadCollisionsGround.Value = decimal.Parse(reader.ReadLine());
+            weightLoadDistanceTraveled.Value = decimal.Parse(reader.ReadLine());
+            weightMaxHeight.Value = decimal.Parse(reader.ReadLine());
+            weightNumberNodes.Value = decimal.Parse(reader.ReadLine());
+            numberNodesGoal.Value = decimal.Parse(reader.ReadLine());
+            weightReactivity.Value = decimal.Parse(reader.ReadLine());
+            textBoxResultsName.Text = reader.ReadLine();
+
+            labelSettingsFilename.Text = Path.GetFileName(openFileDialogSettings.FileName);
+            reader.Close();
+            UpdateInfoLog((int)EvolveKernelAPI.EMessageCodes.EMessageCode_InfoHigh, "Settings loaded from " + labelSettingsFilename.Text);
         }
 
         private void buttonNewSettings_Click(object sender, EventArgs e)
@@ -167,7 +217,72 @@ namespace Evolve
         }
         private void buttonSaveSettings_Click(object sender, EventArgs e)
         {
+            openFileDialogSettings.CheckFileExists = false;
+            openFileDialogSettings.AddExtension = true;
+            if (openFileDialogSettings.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            if (File.Exists(openFileDialogSettings.FileName))
+            {
+                if (MessageBox.Show("File already exisit. Do you want to override it?", "File Already Exisit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                {
+                    return; 
+                }
+            }
+
+            StreamWriter writer = new StreamWriter(openFileDialogSettings.FileName);
+            writer.WriteLine(numericUpDownPopulationSize.Value);
+            writer.WriteLine(numericUpDownDirectPromotions.Value);
+            writer.WriteLine(numericUpDownMutationRate.Value);
+            writer.WriteLine(numericUpDownParentSel.Value);
+            writer.WriteLine(numericUpDownMaxEpochs.Value);
+            writer.WriteLine(numericUpDownSaveFreq.Value);
+            writer.WriteLine(numericUpDownOutputFreq.Value);
+            writer.WriteLine(numericUpDownNumThreads.Value);
+            writer.WriteLine(numericUpDownRandomSeed.Value);
+
+            writer.WriteLine(weightAverageHeight.Value);
+            writer.WriteLine(weightCollisionsGround.Value);
+            writer.WriteLine(weightCollisionsObstacles.Value);
+            writer.WriteLine(weightDistanceTraveled.Value);
+            writer.WriteLine(weightLoadCollisionsGround.Value);
+            writer.WriteLine(weightLoadDistanceTraveled.Value);
+            writer.WriteLine(weightMaxHeight.Value);
+            writer.WriteLine(weightNumberNodes.Value);
+            writer.WriteLine(numberNodesGoal.Value);
+            writer.WriteLine(weightReactivity.Value);
+
+            writer.WriteLine(textBoxResultsName.Text);
+            labelSettingsFilename.Text = Path.GetFileName(openFileDialogSettings.FileName);
+            writer.Close();
+            UpdateInfoLog((int)EvolveKernelAPI.EMessageCodes.EMessageCode_InfoHigh, "Settings saved in " + labelSettingsFilename.Text);
         }
+
+        private void SetEnableButtons(bool value)
+        {
+            buttonLoadSettings.Enabled = value;
+            buttonSaveSettings.Enabled = value;
+            buttonNewSettings.Enabled = value;
+            groupBoxOutpost.Enabled = value;
+            groupBoxGeneticAlgorithm.Enabled = value;
+            groupBoxProcess.Enabled = value;
+            groupBoxWeightCollision.Enabled = value;
+            groupBoxWeightConstitution.Enabled = value;
+            groupBoxWeightHeight.Enabled = value;
+            groupBoxWeightLoad.Enabled = value;
+            groupBoxWeightMovevement.Enabled = value;
+            buttonOpenResults.Enabled = value;
+            buttonSimulate.Enabled = value;
+
+            m_resultFilenames = null;
+            listBoxResults.Items.Clear();
+            listBoxResults.SelectedIndex = -1;
+            richTextBoxResultSelected.Text = "";
+        }
+
+
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// 
