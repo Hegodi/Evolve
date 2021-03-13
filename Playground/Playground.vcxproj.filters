@@ -15,84 +15,60 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dllmain.cpp">
+    <ClCompile Include="Playground.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Evolution\EvolutionaryAlgorithm.cpp">
+    <ClCompile Include="..\KernelEvolve\src\World\Robot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Evolution\GeneticAlgorithm.cpp">
+    <ClCompile Include="..\KernelEvolve\src\World\World.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Physics\Node.cpp">
+    <ClCompile Include="..\KernelEvolve\src\Physics\Node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Physics\Spring.cpp">
+    <ClCompile Include="..\KernelEvolve\src\Physics\Spring.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\World\Robot.cpp">
+    <ClCompile Include="..\KernelEvolve\src\Evolution\EvolutionaryAlgorithm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\World\World.cpp">
+    <ClCompile Include="..\KernelEvolve\src\Evolution\GeneticAlgorithm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ScoreFunctions.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\StaticAnchor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Training.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Simulation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\Graphics.cpp">
+    <ClCompile Include="Graphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Evolution\EvolutionaryAlgorithm.h">
+    <ClInclude Include="..\KernelEvolve\src\World\Robot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Evolution\GeneticAlgorithm.h">
+    <ClInclude Include="..\KernelEvolve\src\World\World.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Physics\Node.h">
+    <ClInclude Include="..\KernelEvolve\src\Physics\Node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Physics\Spring.h">
+    <ClInclude Include="..\KernelEvolve\src\Physics\Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Physics\Vector2D.h">
+    <ClInclude Include="..\KernelEvolve\src\Physics\Spring.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\World\Robot.h">
+    <ClInclude Include="..\KernelEvolve\src\Physics\Vector2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\World\World.h">
+    <ClInclude Include="..\KernelEvolve\src\Evolution\EvolutionaryAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\StaticAnchor.h">
+    <ClInclude Include="..\KernelEvolve\src\Evolution\GeneticAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Training.h">
+    <ClInclude Include="Graphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ScoreFunctions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Physics\Object.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Simulation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\Graphics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphics\olcPixelGameEngine.h">
+    <ClInclude Include="olcPixelGameEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
