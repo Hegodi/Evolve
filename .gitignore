@@ -6,3 +6,5 @@ Build/*
 KernelEvolve/Debug/*
 KernelEvolve/Release/*
 .vs/Evolve/v16/.suo
+Playground/Debug/*
+Playground/Release/*
