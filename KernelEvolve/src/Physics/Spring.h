@@ -27,6 +27,7 @@ public:
 	CNode* GetNodeEnd() const { return m_node2; }
 	virtual float GetLength() const { return m_equilibriumLength; }
 	float GetSpringConstant() const { return m_springConstant; }
+	float GetPotentialEnergy() const { return m_potentialEnergy; }
 
 protected:
 	void UpdateForce();
@@ -36,6 +37,7 @@ protected:
 	float m_equilibriumLength = 1.0f;
 	CNode* m_node1 = nullptr;
 	CNode* m_node2 = nullptr;
+	float m_potentialEnergy = 0.0f;
 };
 
 class CSpringActive : public CSpring

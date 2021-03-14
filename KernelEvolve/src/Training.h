@@ -18,16 +18,14 @@ struct STrainingSettings
 	const char* m_resultsName = nullptr;
 	float m_probInvertCorssover = 0.0f;
 
-	float m_weightDistanceTraveled;
-    float m_weightCollisionsWithGround;
-    float m_weightCollisionsWithObstacles;
-    float m_weightMaxHeight;
-    float m_weightAverageHeight;
-    float m_weightLoadDistanceTraveled;
-    float m_weightLoadCollisionsWithGround;
-    float m_numberNodesGoal;
-    float m_weightNumberNodes;
-    float m_weightReactivity;
+	float m_weightDistanceTraveled = 0.0f;
+    float m_weightCollisionsWithGround = 0.0f;
+    float m_weightCollisionsWithObstacles = 0.0f;
+    float m_weightMaxHeight = 0.0f;
+    float m_weightAverageHeight = 0.0f;
+    float m_numberNodesGoal = 0.0f;
+    float m_weightNumberNodes = 0.0f;
+    float m_weightPotentialEnergy = 0.0f;
 };
 
 class CTraining

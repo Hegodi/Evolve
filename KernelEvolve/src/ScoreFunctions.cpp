@@ -22,11 +22,8 @@ float EvaluateCreature(CRobot const& robot, STrainingSettings const& settings, f
 
 	float dt = world.GetDeltaTime();
 
-	int count = 0;
-	float time = 0.0f;
-	while (time < simulationTime)
+	while (world.GetTime() < simulationTime)
 	{
-		time += dt;
 		world.Update();
 
 		float yPos = world.GetCenter().y;
@@ -35,26 +32,21 @@ float EvaluateCreature(CRobot const& robot, STrainingSettings const& settings, f
 			maxY = yPos;
 		}
 		avgY += yPos;
-		count++;
 	}
 
-	if (count > 0)
-	{
-		avgY /= count;
-	}
+	avgY /= world.GetTime();
 	Vec2f pos1 = robot.GetPos();
 
 	float score = 0;
+	float normalizationFactor = robot.GetNumberNodes() * world.GetTime();
 	score += (pos1.x - pos0.x) * settings.m_weightDistanceTraveled;
-	score += world.GetNumberCollisionsWithGround() * settings.m_weightCollisionsWithGround / robot.GetNumberNodes();
-	score += world.GetNumberCollisionsWithObstacles() * settings.m_weightCollisionsWithObstacles / robot.GetNumberNodes();
+	score += world.GetNumberCollisionsWithGround() * settings.m_weightCollisionsWithGround / normalizationFactor;
+	score += world.GetNumberCollisionsWithObstacles() * settings.m_weightCollisionsWithObstacles / normalizationFactor;
 	score += maxY * settings.m_weightMaxHeight;
 	score += avgY * settings.m_weightAverageHeight;
-	// Load Distance traveled
-	// Load collisions with ground
 	int deltaNodes = (robot.GetNumberNodes() - settings.m_numberNodesGoal);
 	score -= deltaNodes * deltaNodes * settings.m_weightNumberNodes;
-	score += robot.ComputeReactivity() * settings.m_weightReactivity;
+	score += robot.GetSpringsPotentialEnergy() * settings.m_weightPotentialEnergy;
 
 	return score;
 }

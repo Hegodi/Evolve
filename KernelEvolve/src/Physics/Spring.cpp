@@ -14,7 +14,9 @@ void CSpring::UpdateForce()
 		return;
 	}
 
-	Vec2f force = (displacement / length) * (m_equilibriumLength - length) * m_springConstant;
+	float deltaLength = m_equilibriumLength - length;
+	m_potentialEnergy = deltaLength * deltaLength * m_springConstant;
+	Vec2f force = (displacement / length) * deltaLength * m_springConstant;
 	m_node1->AddForce(force);
 	force.invert();
 	m_node2->AddForce(force);

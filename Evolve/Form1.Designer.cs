@@ -77,7 +77,7 @@ namespace Evolve
             this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBoxWeightConstitution = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel21 = new System.Windows.Forms.TableLayoutPanel();
-            this.weightReactivity = new System.Windows.Forms.NumericUpDown();
+            this.weightPotentialEnergy = new System.Windows.Forms.NumericUpDown();
             this.label21 = new System.Windows.Forms.Label();
             this.numberNodesGoal = new System.Windows.Forms.NumericUpDown();
             this.label19 = new System.Windows.Forms.Label();
@@ -101,12 +101,6 @@ namespace Evolve
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.weightAverageHeight = new System.Windows.Forms.NumericUpDown();
-            this.groupBoxWeightLoad = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel20 = new System.Windows.Forms.TableLayoutPanel();
-            this.weightLoadDistanceTraveled = new System.Windows.Forms.NumericUpDown();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.weightLoadCollisionsGround = new System.Windows.Forms.NumericUpDown();
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -153,7 +147,7 @@ namespace Evolve
             this.tableLayoutPanel15.SuspendLayout();
             this.groupBoxWeightConstitution.SuspendLayout();
             this.tableLayoutPanel21.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.weightReactivity)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weightPotentialEnergy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numberNodesGoal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.weightNumberNodes)).BeginInit();
             this.groupBoxWeightCollision.SuspendLayout();
@@ -168,10 +162,6 @@ namespace Evolve
             this.tableLayoutPanel19.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.weightMaxHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.weightAverageHeight)).BeginInit();
-            this.groupBoxWeightLoad.SuspendLayout();
-            this.tableLayoutPanel20.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.weightLoadDistanceTraveled)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weightLoadCollisionsGround)).BeginInit();
             this.tabControlMain.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -841,7 +831,7 @@ namespace Evolve
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(420, 422);
+            this.tabPage5.Size = new System.Drawing.Size(420, 425);
             this.tabPage5.TabIndex = 1;
             this.tabPage5.Text = "Evaluation";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -850,12 +840,11 @@ namespace Evolve
             // 
             this.tableLayoutPanel15.ColumnCount = 1;
             this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel15.Controls.Add(this.groupBoxWeightConstitution, 0, 5);
             this.tableLayoutPanel15.Controls.Add(this.groupBoxWeightCollision, 0, 2);
             this.tableLayoutPanel15.Controls.Add(this.groupBoxWeightMovevement, 0, 1);
             this.tableLayoutPanel15.Controls.Add(this.tableLayoutPanel17, 0, 0);
             this.tableLayoutPanel15.Controls.Add(this.groupBoxWeightHeight, 0, 3);
-            this.tableLayoutPanel15.Controls.Add(this.groupBoxWeightLoad, 0, 4);
+            this.tableLayoutPanel15.Controls.Add(this.groupBoxWeightConstitution, 0, 4);
             this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel15.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel15.Name = "tableLayoutPanel15";
@@ -864,29 +853,29 @@ namespace Evolve
             this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
             this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 79F));
             this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 79F));
-            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 79F));
+            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 115F));
             this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel15.Size = new System.Drawing.Size(414, 416);
+            this.tableLayoutPanel15.Size = new System.Drawing.Size(414, 419);
             this.tableLayoutPanel15.TabIndex = 0;
             // 
             // groupBoxWeightConstitution
             // 
             this.groupBoxWeightConstitution.Controls.Add(this.tableLayoutPanel21);
             this.groupBoxWeightConstitution.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxWeightConstitution.Location = new System.Drawing.Point(3, 317);
+            this.groupBoxWeightConstitution.Location = new System.Drawing.Point(3, 238);
             this.groupBoxWeightConstitution.Name = "groupBoxWeightConstitution";
-            this.groupBoxWeightConstitution.Size = new System.Drawing.Size(408, 96);
+            this.groupBoxWeightConstitution.Size = new System.Drawing.Size(408, 109);
             this.groupBoxWeightConstitution.TabIndex = 5;
             this.groupBoxWeightConstitution.TabStop = false;
-            this.groupBoxWeightConstitution.Text = "Constitution";
+            this.groupBoxWeightConstitution.Text = "Miscelaneous";
             // 
             // tableLayoutPanel21
             // 
             this.tableLayoutPanel21.ColumnCount = 2;
             this.tableLayoutPanel21.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.17413F));
             this.tableLayoutPanel21.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.82587F));
-            this.tableLayoutPanel21.Controls.Add(this.weightReactivity, 1, 2);
+            this.tableLayoutPanel21.Controls.Add(this.weightPotentialEnergy, 1, 2);
             this.tableLayoutPanel21.Controls.Add(this.label21, 0, 2);
             this.tableLayoutPanel21.Controls.Add(this.numberNodesGoal, 1, 0);
             this.tableLayoutPanel21.Controls.Add(this.label19, 0, 0);
@@ -895,31 +884,32 @@ namespace Evolve
             this.tableLayoutPanel21.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel21.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel21.Name = "tableLayoutPanel21";
-            this.tableLayoutPanel21.RowCount = 3;
+            this.tableLayoutPanel21.RowCount = 4;
+            this.tableLayoutPanel21.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel21.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel21.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel21.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel21.Size = new System.Drawing.Size(402, 77);
+            this.tableLayoutPanel21.Size = new System.Drawing.Size(402, 90);
             this.tableLayoutPanel21.TabIndex = 0;
             // 
-            // weightReactivity
+            // weightPotentialEnergy
             // 
-            this.weightReactivity.DecimalPlaces = 1;
-            this.weightReactivity.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.weightReactivity.Increment = new decimal(new int[] {
+            this.weightPotentialEnergy.DecimalPlaces = 1;
+            this.weightPotentialEnergy.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.weightPotentialEnergy.Increment = new decimal(new int[] {
             1,
             0,
             0,
             65536});
-            this.weightReactivity.Location = new System.Drawing.Point(265, 53);
-            this.weightReactivity.Minimum = new decimal(new int[] {
+            this.weightPotentialEnergy.Location = new System.Drawing.Point(265, 53);
+            this.weightPotentialEnergy.Minimum = new decimal(new int[] {
             100,
             0,
             0,
             -2147483648});
-            this.weightReactivity.Name = "weightReactivity";
-            this.weightReactivity.Size = new System.Drawing.Size(134, 20);
-            this.weightReactivity.TabIndex = 6;
+            this.weightPotentialEnergy.Name = "weightPotentialEnergy";
+            this.weightPotentialEnergy.Size = new System.Drawing.Size(134, 20);
+            this.weightPotentialEnergy.TabIndex = 6;
             // 
             // label21
             // 
@@ -927,9 +917,9 @@ namespace Evolve
             this.label21.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label21.Location = new System.Drawing.Point(3, 50);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(256, 27);
+            this.label21.Size = new System.Drawing.Size(256, 25);
             this.label21.TabIndex = 5;
-            this.label21.Text = "Springs Reactivity [ Weight * Sum  (L1 - L2)^2 ]";
+            this.label21.Text = "Springs Potential Energy [ Weight * Sum  k *(Dx)^2 ]";
             this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // numberNodesGoal
@@ -1064,7 +1054,7 @@ namespace Evolve
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(256, 25);
             this.label14.TabIndex = 3;
-            this.label14.Text = "With Obstacles [ Nc * Weight ]";
+            this.label14.Text = "With Other Nodes [ Nc * Weight ]";
             this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // weightCollisionsObstacles
@@ -1262,97 +1252,6 @@ namespace Evolve
             this.weightAverageHeight.Name = "weightAverageHeight";
             this.weightAverageHeight.Size = new System.Drawing.Size(134, 20);
             this.weightAverageHeight.TabIndex = 4;
-            // 
-            // groupBoxWeightLoad
-            // 
-            this.groupBoxWeightLoad.Controls.Add(this.tableLayoutPanel20);
-            this.groupBoxWeightLoad.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxWeightLoad.Enabled = false;
-            this.groupBoxWeightLoad.Location = new System.Drawing.Point(3, 238);
-            this.groupBoxWeightLoad.Name = "groupBoxWeightLoad";
-            this.groupBoxWeightLoad.Size = new System.Drawing.Size(408, 73);
-            this.groupBoxWeightLoad.TabIndex = 4;
-            this.groupBoxWeightLoad.TabStop = false;
-            this.groupBoxWeightLoad.Text = "Load Transport";
-            // 
-            // tableLayoutPanel20
-            // 
-            this.tableLayoutPanel20.ColumnCount = 2;
-            this.tableLayoutPanel20.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.17413F));
-            this.tableLayoutPanel20.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.82587F));
-            this.tableLayoutPanel20.Controls.Add(this.weightLoadDistanceTraveled, 1, 0);
-            this.tableLayoutPanel20.Controls.Add(this.label17, 0, 0);
-            this.tableLayoutPanel20.Controls.Add(this.label18, 0, 1);
-            this.tableLayoutPanel20.Controls.Add(this.weightLoadCollisionsGround, 1, 1);
-            this.tableLayoutPanel20.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel20.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanel20.Name = "tableLayoutPanel20";
-            this.tableLayoutPanel20.RowCount = 3;
-            this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel20.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel20.Size = new System.Drawing.Size(402, 54);
-            this.tableLayoutPanel20.TabIndex = 0;
-            // 
-            // weightLoadDistanceTraveled
-            // 
-            this.weightLoadDistanceTraveled.DecimalPlaces = 1;
-            this.weightLoadDistanceTraveled.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.weightLoadDistanceTraveled.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.weightLoadDistanceTraveled.Location = new System.Drawing.Point(265, 3);
-            this.weightLoadDistanceTraveled.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            -2147483648});
-            this.weightLoadDistanceTraveled.Name = "weightLoadDistanceTraveled";
-            this.weightLoadDistanceTraveled.Size = new System.Drawing.Size(134, 20);
-            this.weightLoadDistanceTraveled.TabIndex = 1;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label17.Location = new System.Drawing.Point(3, 0);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(256, 25);
-            this.label17.TabIndex = 2;
-            this.label17.Text = "Load Distance Traveled[ (Xend - Xstart) * Weight ]";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label18.Location = new System.Drawing.Point(3, 25);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(256, 25);
-            this.label18.TabIndex = 3;
-            this.label18.Text = "Load Collisions With Ground [ Nc * Weight ]";
-            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // weightLoadCollisionsGround
-            // 
-            this.weightLoadCollisionsGround.DecimalPlaces = 1;
-            this.weightLoadCollisionsGround.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.weightLoadCollisionsGround.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.weightLoadCollisionsGround.Location = new System.Drawing.Point(265, 28);
-            this.weightLoadCollisionsGround.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            -2147483648});
-            this.weightLoadCollisionsGround.Name = "weightLoadCollisionsGround";
-            this.weightLoadCollisionsGround.Size = new System.Drawing.Size(134, 20);
-            this.weightLoadCollisionsGround.TabIndex = 4;
             // 
             // tabControlMain
             // 
@@ -1585,7 +1484,7 @@ namespace Evolve
             this.groupBoxWeightConstitution.ResumeLayout(false);
             this.tableLayoutPanel21.ResumeLayout(false);
             this.tableLayoutPanel21.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.weightReactivity)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weightPotentialEnergy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numberNodesGoal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.weightNumberNodes)).EndInit();
             this.groupBoxWeightCollision.ResumeLayout(false);
@@ -1604,11 +1503,6 @@ namespace Evolve
             this.tableLayoutPanel19.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.weightMaxHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.weightAverageHeight)).EndInit();
-            this.groupBoxWeightLoad.ResumeLayout(false);
-            this.tableLayoutPanel20.ResumeLayout(false);
-            this.tableLayoutPanel20.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.weightLoadDistanceTraveled)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weightLoadCollisionsGround)).EndInit();
             this.tabControlMain.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
@@ -1706,13 +1600,7 @@ namespace Evolve
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.NumericUpDown weightAverageHeight;
-        private System.Windows.Forms.GroupBox groupBoxWeightLoad;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel20;
-        private System.Windows.Forms.NumericUpDown weightLoadDistanceTraveled;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.NumericUpDown weightLoadCollisionsGround;
-        private System.Windows.Forms.NumericUpDown weightReactivity;
+        private System.Windows.Forms.NumericUpDown weightPotentialEnergy;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label labelSettingsFilename;

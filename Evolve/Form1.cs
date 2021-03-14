@@ -93,11 +93,9 @@ namespace Evolve
                 settings.m_weightCollisionsWithObstacles = (float)weightCollisionsObstacles.Value;
                 settings.m_weightMaxHeight = (float) weightMaxHeight.Value;
                 settings.m_weightAverageHeight = (float) weightAverageHeight.Value;
-                settings.m_weightLoadDistanceTraveled = (float) weightLoadDistanceTraveled.Value;
-                settings.m_weightLoadCollisionsWithGround = (float) weightLoadCollisionsGround.Value;
                 settings.m_numberNodesGoal = (float)numberNodesGoal.Value;
                 settings.m_weightNumberNodes = (float)weightNumberNodes.Value;
-                settings.m_weightReactivity = (float)weightReactivity.Value;
+                settings.m_weightPotentialEnergy = (float)weightPotentialEnergy.Value;
 
                 buttonStartStopTraining.Text = "Abort Training";
 
@@ -169,12 +167,10 @@ namespace Evolve
             weightCollisionsGround.Value = 0;
             weightCollisionsObstacles.Value = 0;
             weightDistanceTraveled.Value = 1;
-            weightLoadCollisionsGround.Value = 0;
-            weightLoadDistanceTraveled.Value = 0;
             weightMaxHeight.Value = 0;
             weightNumberNodes.Value = 0;
             numberNodesGoal.Value = 2;
-            weightReactivity.Value = 0;
+            weightPotentialEnergy.Value = 0;
 
             textBoxResultsName.Text = "NewResults";
             labelSettingsFilename.Text = "New Settings (not saved)";
@@ -208,12 +204,10 @@ namespace Evolve
             weightCollisionsGround.Value = decimal.Parse(reader.ReadLine());
             weightCollisionsObstacles.Value = decimal.Parse(reader.ReadLine());
             weightDistanceTraveled.Value = decimal.Parse(reader.ReadLine());
-            weightLoadCollisionsGround.Value = decimal.Parse(reader.ReadLine());
-            weightLoadDistanceTraveled.Value = decimal.Parse(reader.ReadLine());
             weightMaxHeight.Value = decimal.Parse(reader.ReadLine());
             weightNumberNodes.Value = decimal.Parse(reader.ReadLine());
             numberNodesGoal.Value = int.Parse(reader.ReadLine());
-            weightReactivity.Value = decimal.Parse(reader.ReadLine());
+            weightPotentialEnergy.Value = decimal.Parse(reader.ReadLine());
             textBoxResultsName.Text = reader.ReadLine();
 
             labelSettingsFilename.Text = Path.GetFileName(openFileDialogSettings.FileName);
@@ -257,12 +251,10 @@ namespace Evolve
             writer.WriteLine(weightCollisionsGround.Value);
             writer.WriteLine(weightCollisionsObstacles.Value);
             writer.WriteLine(weightDistanceTraveled.Value);
-            writer.WriteLine(weightLoadCollisionsGround.Value);
-            writer.WriteLine(weightLoadDistanceTraveled.Value);
             writer.WriteLine(weightMaxHeight.Value);
             writer.WriteLine(weightNumberNodes.Value);
             writer.WriteLine((int)(numberNodesGoal.Value));
-            writer.WriteLine(weightReactivity.Value);
+            writer.WriteLine(weightPotentialEnergy.Value);
 
             writer.WriteLine(textBoxResultsName.Text);
             labelSettingsFilename.Text = Path.GetFileName(openFileDialogSettings.FileName);

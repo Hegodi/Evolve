@@ -22,7 +22,7 @@ public:
 	bool IsValid() const;
 	int GetNumberNodes() const;
 	Vec2f GetPos() const;
-	float ComputeReactivity() const;
+	float GetSpringsPotentialEnergy() const;
 
 	void PrintDebug(std::string txt = "") const;
 	void SetScore(float score) { m_score = score; }

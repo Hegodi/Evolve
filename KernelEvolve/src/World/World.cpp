@@ -44,6 +44,7 @@ void CWorld::Update()
 			if (n1->IsColliding(n2))
 			{
 				CNode::ResolveCollisionVelocity(n1, n2);
+				m_collisionsWithObstacles++;
 			}
 		}
 	}

@@ -203,20 +203,15 @@ Vec2f CRobot::GetPos() const
 	return pos;
 }
 
-float CRobot::ComputeReactivity() const
+float CRobot::GetSpringsPotentialEnergy() const
 {
-	float reactivity = 0.0f;
+	float energy = 0.0f;
 	for (CSpring const* const spring : m_springs)
 	{
-		if (CSpringActive const* const springActive = dynamic_cast<CSpringActive const* const>(spring))
-		{
-			float length = springActive->GetLength();
-			float deltaFactor = springActive->GetDeltaLengthFactor();
-			reactivity += length * length * deltaFactor * deltaFactor;
-		}
+		energy += spring->GetPotentialEnergy();
 	}
 
-	return reactivity;
+	return energy;
 }
 
 void CRobot::PrintDebug(std::string txt) const
