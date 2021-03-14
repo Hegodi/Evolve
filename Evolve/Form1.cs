@@ -23,6 +23,7 @@ namespace Evolve
 
         // Results:
         string[] m_resultFilenames = null;
+        readonly string m_workingFolderName = "Simulations";
 
         public Form1()
         {
@@ -30,7 +31,7 @@ namespace Evolve
             m_random = new Random((int) DateTimeOffset.Now.ToUnixTimeSeconds());
             ResetSettings();
 
-            string workingFolder = Path.Combine(Application.StartupPath, "Simulations");
+            string workingFolder = Path.Combine(Application.StartupPath, m_workingFolderName);
             if (!Directory.Exists(workingFolder))
             {
                 Directory.CreateDirectory(workingFolder);
@@ -50,7 +51,7 @@ namespace Evolve
             else
             {
                 textBoxInfo.Text = "";
-                string filename = textBoxResultsName.Text;
+                string filename = Path.Combine(m_workingFolderName, textBoxResultsName.Text);
 
                 bool createDirectory = true;
                 if (Directory.Exists(filename))
@@ -151,7 +152,11 @@ namespace Evolve
             }
             textBoxInfo.SelectionColor = color;
 
-            textBoxInfo.AppendText(message);
+            DateTime now = DateTime.Now;
+            int h = now.Hour;
+            int m = now.Minute;
+            int s = now.Second;
+            textBoxInfo.AppendText("[" + h + ":" + m + ":" + s + "]  " + message);
             textBoxInfo.AppendText(Environment.NewLine);
             textBoxInfo.SelectionColor = textBoxInfo.ForeColor;
             textBoxInfo.ScrollToCaret();
