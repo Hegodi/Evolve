@@ -5,11 +5,12 @@
 
 namespace GeneticAlgorithm
 {
-	CEvolutionaryAlgorithm::CEvolutionaryAlgorithm(int populationSize, int directPromotion, float mutationProbability, int numberCombats)
+	CEvolutionaryAlgorithm::CEvolutionaryAlgorithm(int populationSize, int directPromotion, float mutationProbability, int numberCombats, float invertCrossoverProb)
 		: m_populationSize(populationSize) 
 		, m_directPromotion(directPromotion)
 		, m_mutationProbability(mutationProbability)
 		, m_numberCombats(numberCombats)
+		, m_invertCrossoverProbability(invertCrossoverProb)
 	{
 		m_population = new CScore[m_populationSize];
 		m_parentPopulation = new CScore[m_populationSize];
@@ -114,7 +115,15 @@ namespace GeneticAlgorithm
 		Dna const& dnaParent2 = m_parentPopulation[indexParent2].GetDna();
 
 		int crossoverPoint = rand() % DNA_LENGTH;
-		for (int i = 0; i < crossoverPoint; i++)
+		int indParent = 0;
+		int deltaIndParent = 1;
+		float probInvert = rand() / RAND_MAX;
+		if (probInvert < m_invertCrossoverProbability)
+		{
+			indParent = crossoverPoint-1;
+			deltaIndParent = -1;
+		}
+		for (int i = 0; i < crossoverPoint; i++, indParent += deltaIndParent)
 		{
 			if (ShouldMutate())
 			{
@@ -122,10 +131,18 @@ namespace GeneticAlgorithm
 			}
 			else
 			{
-				dnaChild[i] = dnaParent1[i];
+				dnaChild[i] = dnaParent1[indParent];
 			}
 		}
-		for (int i = crossoverPoint; i<DNA_LENGTH; i++)
+
+		indParent = crossoverPoint;
+		deltaIndParent = 1;
+		if (probInvert < m_invertCrossoverProbability)
+		{
+			indParent = DNA_LENGTH - 1;
+			deltaIndParent = -1;
+		}
+		for (int i = crossoverPoint; i<DNA_LENGTH; i++, indParent += deltaIndParent)
 		{
 			if (ShouldMutate())
 			{
@@ -133,7 +150,7 @@ namespace GeneticAlgorithm
 			}
 			else
 			{
-				dnaChild[i] = dnaParent2[i];
+				dnaChild[i] = dnaParent2[indParent];
 			}
 		}
 	}

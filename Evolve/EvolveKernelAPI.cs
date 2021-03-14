@@ -26,6 +26,7 @@ namespace Evolve
 	        public int m_numberThreads;
             public int m_randomSeed;
             public string m_resultName;
+            public float m_probInvertCorssover;
 
             // Evaluation
             public float m_weightDistanceTraveled;

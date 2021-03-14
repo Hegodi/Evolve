@@ -16,6 +16,7 @@ struct STrainingSettings
 	int m_numberThreads = 1;
 	int m_randomSeed = 0;
 	const char* m_resultsName = nullptr;
+	float m_probInvertCorssover = 0.0f;
 
 	float m_weightDistanceTraveled;
     float m_weightCollisionsWithGround;

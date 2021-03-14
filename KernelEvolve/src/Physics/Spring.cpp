@@ -43,7 +43,7 @@ void CSpringActive::Update(float deltaTime)
 		else if (m_lengthState == ELengthState::Max)
 		{
 			m_lengthState = ELengthState::Min;
-			m_equilibriumLength = (1.0f - m_deltaLengthFactor) * m_referenceLength;
+			m_equilibriumLength = m_referenceLength;
 		}
 
 		m_time = m_period;

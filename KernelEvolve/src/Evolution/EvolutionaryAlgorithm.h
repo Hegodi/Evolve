@@ -32,7 +32,7 @@ namespace GeneticAlgorithm
 	class CEvolutionaryAlgorithm
 	{
 	public :
-		CEvolutionaryAlgorithm(int populationSize = 100, int directPromotion = 2, float mutationProbability = 0.001, int numberCombats = 1);
+		CEvolutionaryAlgorithm(int populationSize = 100, int directPromotion = 2, float mutationProbability = 0.001, int numberCombats = 1, float invertCrossover = 0.0f);
 		~CEvolutionaryAlgorithm();
 		Dna const& GetDna(int index) const { return m_population[index].GetDna(); }
 		float GetScore(int index) const { return m_population[index].GetScore(); }
@@ -51,6 +51,7 @@ namespace GeneticAlgorithm
 
 	private:
 		float m_mutationProbability = 0.0f;
+		float m_invertCrossoverProbability = 0.0f;
 		int m_directPromotion = 0;
 		int m_numberCombats = 1;
 
