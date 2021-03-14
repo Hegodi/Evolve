@@ -15,15 +15,6 @@ namespace GeneticAlgorithm
 		m_population = new CScore[m_populationSize];
 		m_parentPopulation = new CScore[m_populationSize];
 
-		float memoryKb = (m_populationSize * (GeneticAlgorithm::SIZE_DNA + sizeof(float)) * 2) / 1024.0f;
-		std::cout << "##############################################################################\n";
-		std::cout << "#                                                                             \n";
-		std::cout << "# Training                                                                    \n";
-		std::cout << "#                                                                             \n";
-		std::cout << "#-----------------------------------------------------------------------------\n";
-		std::cout << "# Memory for DNA: " << GeneticAlgorithm::SIZE_DNA << " bytes\n";
-		std::cout << "# Total Memory Required: " << memoryKb << " Kb\n";
-		std::cout << "#-----------------------------------------------------------------------------\n";
 	}
 
 	CEvolutionaryAlgorithm::~CEvolutionaryAlgorithm()
@@ -31,6 +22,7 @@ namespace GeneticAlgorithm
 		delete[] m_population;
 		delete[] m_parentPopulation;
 	}
+
 	void CEvolutionaryAlgorithm::SetScore(int index, float score) 
 	{ 
 		m_population[index].SetScore(score); 

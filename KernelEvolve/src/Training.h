@@ -48,7 +48,7 @@ private:
 	void SendMessage(int msgCode, std::string message);
 
 private:
-	char m_message[256];
+	char m_message[512];
 	ProgressCallback m_progressCallback = nullptr;
 	// Flow controll
 	int m_epochs = 0;
@@ -57,7 +57,7 @@ private:
 	STrainingSettings m_settings;
 
 	// Creatures
-	int m_minNodes = 4;
+	int m_minNodes = 2;
 
 	// Process
 	bool m_abortTraining = false;

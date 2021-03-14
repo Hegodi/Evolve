@@ -68,5 +68,6 @@ extern "C"
 	DLLEXPORT int RunGraphicsSimulation(SGraphicsSimulationSettings settings);
     DLLEXPORT SRobotInfo* CreateRobotInfo(const char* dnaFilename);
     DLLEXPORT void DisposeRobotInfo(SRobotInfo* robotInfo);
+	DLLEXPORT float EstimateMemoryNeeded(int populationSize);
 }
 

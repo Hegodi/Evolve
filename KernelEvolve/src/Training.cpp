@@ -20,10 +20,7 @@ void CTraining::Run(STrainingSettings const& settings, ProgressCallback progress
 	srand(m_settings.m_randomSeed);
 
 	m_baseFileName = m_settings.m_resultsName + std::string("\\Epoch_");
-
-	std::cout << "NAME: " << m_settings.m_resultsName << "\n\n";
-
-	m_progressCallback(EMessageCode_Info, "Training Started");
+	SendMessage(EMessageCode_Info, "Training Started");
 
 	int testsPerThread = m_settings.m_populationSize / m_settings.m_numberThreads;
 	if (m_settings.m_populationSize % m_settings.m_numberThreads != 0)
@@ -41,35 +38,23 @@ void CTraining::Run(STrainingSettings const& settings, ProgressCallback progress
 
 	std::vector<std::thread> threads;
 
-	int minNodes = m_minNodes;
 	auto timePoint0 = std::chrono::steady_clock::now();
 	SendMessage(EMessageCode_Info, "Initizalizing population ...");
 	// Initial population
 	for (int i = 0; i < m_settings.m_populationSize; i++)
 	{
-		if (i % 20 == 0)
-		{
-			minNodes--;
-			if (minNodes < 2)
-			{
-				minNodes = 2;
-			}
-
-		}
 		GeneticAlgorithm::Dna dna;
 		GeneticAlgorithm::InitRandom(dna);
 		CRobot robot(dna);
 		int attempt = 0;
-		while (robot.GetNumberNodes() < minNodes && attempt < 100)
+		while (!robot.IsValid())
 		{
 			GeneticAlgorithm::InitRandom(dna);
 			robot.Init(dna);
 			attempt++;
 		}
-
-		float score = EvaluateCreature(robot, m_settings);
 		evolutionaryAlgorithm.SetDna(i, dna);
-		evolutionaryAlgorithm.SetScore(i, score);
+		evolutionaryAlgorithm.SetScore(i, 0.0f);
 
 		if (m_abortTraining)
 		{
@@ -77,7 +62,27 @@ void CTraining::Run(STrainingSettings const& settings, ProgressCallback progress
 		}
 	}
 
-	SendMessage(EMessageCode_Info, "Initizalization DONE");
+	if (!m_abortTraining)
+	{
+		SendMessage(EMessageCode_Info, "Initizalization DONE");
+	}
+
+	// Initial Scores
+	{
+		threads.clear();
+		for (int i = 0; i < m_settings.m_numberThreads; i++)
+		{
+			int indStart = i * testsPerThread;
+			int indEnd = indStart + testsPerThread;
+			threads.push_back(std::thread(ThreadTrain, this, &evolutionaryAlgorithm, m_settings, indStart, indEnd));
+		}
+
+		for (int i = 0; i < m_settings.m_numberThreads; i++)
+		{
+			threads[i].join();
+		}
+	}
+
 	bool m_isSaved = true;
 	while (m_epochs < m_settings.m_maxEpochs && !m_abortTraining)
 	{

@@ -95,5 +95,8 @@ namespace Evolve
         public static extern IntPtr CreateRobotInfo(string dnaFilename);
         [DllImport("KernelEvolve.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void DisposeRobotInfo(IntPtr robotInfo);
+
+        [DllImport("KernelEvolve.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern float EstimateMemoryNeeded(int populationSize);
     }
 }

@@ -98,6 +98,9 @@ namespace Evolve
                 settings.m_weightReactivity = (float)weightReactivity.Value;
 
                 buttonStartStopTraining.Text = "Abort Training";
+
+                float mbNeeded = EvolveKernelAPI.EstimateMemoryNeeded(settings.m_populationSize);
+                UpdateInfoLog((int)EvolveKernelAPI.EMessageCodes.EMessageCode_Info, "Memory needed: " + mbNeeded + "  Mb");
                 m_workerThread = new Thread(() => WorkerThreadEntryPoint(settings, OnProgressCallback));
                 m_workerThread.Start();
                 SetEnableButtons(false);

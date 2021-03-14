@@ -65,12 +65,6 @@ int RunGraphicsSimulation(SGraphicsSimulationSettings settings)
 	GeneticAlgorithm::Load(dna, settings.m_dnaFilename);
 	CRobot robot(dna);
 
-	//SRobotInfo* info = CreateRobotInfo(settings.m_dnaFilename);
-	//std::cout << "DLL: Robot Info " << settings.m_dnaFilename << std::endl;
-	//std::cout << "DLL: num nodes: " << info->m_numNodes << std::endl;
-	//std::cout << "DLL: num springs: " << info->m_numSprings << std::endl;
-	//DisposeRobotInfo(info);
-
 	world->AddRobot(robot);
 	// Load Robots
 	CGraphicsSimulation game(world);
@@ -163,4 +157,9 @@ void DisposeRobotInfo(SRobotInfo* robotInfo)
 	}
 
 	delete robotInfo;
+}
+
+float EstimateMemoryNeeded(int size)
+{
+	return 2 * GeneticAlgorithm::SIZE_DNA * size / (1024.0f * 1024.0f);
 }
