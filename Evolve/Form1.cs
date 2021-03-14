@@ -137,6 +137,11 @@ namespace Evolve
                     color = Color.Red;
                     message = "ERROR: " + message;
                     break;
+                case EvolveKernelAPI.EMessageCodes.EMessageCode_Completed:
+                    color = Color.Green;
+                    SetEnableButtons(true);
+                    buttonStartStopTraining.Text = "Start Training";
+                    break;
             }
             textBoxInfo.SelectionColor = color;
 

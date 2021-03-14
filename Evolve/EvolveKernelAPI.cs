@@ -10,7 +10,8 @@ namespace Evolve
             EMessageCode_Info,
             EMessageCode_InfoHigh,
             EMessageCode_Warning,
-            EMessageCode_Error
+            EMessageCode_Error,
+            EMessageCode_Completed
         }
 
         [StructLayout(LayoutKind.Sequential)]

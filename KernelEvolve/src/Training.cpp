@@ -132,7 +132,7 @@ void CTraining::Run(STrainingSettings const& settings, ProgressCallback progress
 	}
 	else
 	{
-		SendMessage(EMessageCode_InfoHigh, "Training completed");
+		SendMessage(EMessageCode_Completed, "Training completed");
 	}
 	m_isRunning = false;
 	std::cout << "Simulation Finished\n";

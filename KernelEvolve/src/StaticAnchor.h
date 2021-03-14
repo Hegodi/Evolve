@@ -23,7 +23,9 @@ enum EMessageCode
 	EMessageCode_Info,
 	EMessageCode_InfoHigh,
 	EMessageCode_Warning,
-	EMessageCode_Error
+	EMessageCode_Error,
+	EMessageCode_Completed
+
 };
 
 struct SNodeInfo
