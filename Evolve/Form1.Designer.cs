@@ -1403,7 +1403,7 @@ namespace Evolve
             // openFileDialogSettings
             // 
             this.openFileDialogSettings.DefaultExt = "cfg";
-            this.openFileDialogSettings.FileName = "openFileDialog1";
+            this.openFileDialogSettings.FileName = "Settings";
             // 
             // label22
             // 

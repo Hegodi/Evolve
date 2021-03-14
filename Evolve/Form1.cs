@@ -29,8 +29,14 @@ namespace Evolve
             InitializeComponent();
             m_random = new Random((int) DateTimeOffset.Now.ToUnixTimeSeconds());
             ResetSettings();
-            folderBrowserDialogResults.SelectedPath = Application.StartupPath;
-            openFileDialogSettings.InitialDirectory = Application.StartupPath;
+
+            string workingFolder = Path.Combine(Application.StartupPath, "Simulations");
+            if (!Directory.Exists(workingFolder))
+            {
+                Directory.CreateDirectory(workingFolder);
+            }
+            folderBrowserDialogResults.SelectedPath = workingFolder;
+            openFileDialogSettings.InitialDirectory = workingFolder;
         }
 
         private void buttonStartTraining_Click(object sender, EventArgs e)
