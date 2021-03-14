@@ -19,6 +19,7 @@ namespace Evolve
 
         Thread m_workerThread;
         Thread m_simulationThread;
+        Random m_random;
 
         // Results:
         string[] m_resultFilenames = null;
@@ -26,6 +27,7 @@ namespace Evolve
         public Form1()
         {
             InitializeComponent();
+            m_random = new Random((int) DateTimeOffset.Now.ToUnixTimeSeconds());
             ResetSettings();
             folderBrowserDialogResults.SelectedPath = Application.StartupPath;
             openFileDialogSettings.InitialDirectory = Application.StartupPath;
@@ -423,6 +425,11 @@ namespace Evolve
             }
 
             EvolveKernelAPI.DisposeRobotInfo(dataRobot);
+        }
+
+        private void buttonRandomSeed_Click(object sender, EventArgs e)
+        {
+            numericUpDownRandomSeed.Value = m_random.Next(0, 9999999);
         }
     }
 }

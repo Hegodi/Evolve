@@ -489,11 +489,17 @@ namespace Evolve
             this.buttonRandomSeed.TabIndex = 0;
             this.buttonRandomSeed.Text = "Random";
             this.buttonRandomSeed.UseVisualStyleBackColor = true;
+            this.buttonRandomSeed.Click += new System.EventHandler(this.buttonRandomSeed_Click);
             // 
             // numericUpDownRandomSeed
             // 
             this.numericUpDownRandomSeed.Dock = System.Windows.Forms.DockStyle.Fill;
             this.numericUpDownRandomSeed.Location = new System.Drawing.Point(3, 3);
+            this.numericUpDownRandomSeed.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
             this.numericUpDownRandomSeed.Name = "numericUpDownRandomSeed";
             this.numericUpDownRandomSeed.Size = new System.Drawing.Size(170, 20);
             this.numericUpDownRandomSeed.TabIndex = 1;
