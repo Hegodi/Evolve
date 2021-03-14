@@ -40,9 +40,14 @@ int main()
 	// Load Robots
 
 
-	CGraphics game(world);
-	if (game.Construct(600, 600, 1, 1))
-			game.Start();
+	//CGraphics game(world);
+	//if (game.Construct(600, 600, 1, 1))
+			//game.Start();
+
+	for (int i = 0; i < 1000000; i++)
+	{
+		world->Update();
+	}
 
 	delete n1;
 	delete n2;

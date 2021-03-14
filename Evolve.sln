@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evolve", "Evolve\Evolve.csproj", "{4A3AD5F6-8D22-40F7-9FB2-D073953D822C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E582A122-B080-4670-90C6-B9E16C745DAF} = {E582A122-B080-4670-90C6-B9E16C745DAF}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KernelEvolve", "KernelEvolve\KernelEvolve.vcxproj", "{E582A122-B080-4670-90C6-B9E16C745DAF}"
 EndProject
